@@ -1,71 +1,71 @@
 <script setup lang="ts">
-
+import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
+const isOpen = ref(false)
 </script>
 
 <template>
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="25" height="25" />
+  <nav class="navbar is-info" role="navigation" aria-label="main navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="25" height="25" />
 
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-
-  <div id="navbarBasicExample" class="navbar-menu">
-    <div class="navbar-start">
-        <routerLink to="/" class="navbar-item">Home</routerLink>
-        <routerLink to="/about" class="navbar-item">About</routerLink>
-      <a class="navbar-item">
-        Home
-      </a>
-
-      <a class="navbar-item">
-        Documentation
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+          :class="{ 'is-active': isOpen }"
+          @click="isOpen = !isOpen"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
         </a>
+      </div>
 
-        <div class="navbar-dropdown">
-          <a class="navbar-item">
-            About
-          </a>
-          <a class="navbar-item is-selected">
-            Jobs
-          </a>
-          <a class="navbar-item">
-            Contact
-          </a>
-          <hr class="navbar-divider">
-          <a class="navbar-item">
-            Report an issue
-          </a>
+      <div class="navbar-menu" :class="{ 'is-active': isOpen }">
+        <div class="navbar-start">
+          <routerLink to="/" class="navbar-item">Home</routerLink>
+          <routerLink to="/about" class="navbar-item">About</routerLink>
+          <a class="navbar-item"> Home </a>
+
+          <a class="navbar-item"> Documentation </a>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link"> More </a>
+
+            <div class="navbar-dropdown">
+              <RouterLink to="/about" class="navbar-item"> About </RouterLink>
+              <RouterLink to="/jobs" class="navbar-item" active-class="is-selected">
+                Jobs
+              </RouterLink>
+              <RouterLink to="/contact" class="navbar-item"> Contact </RouterLink>
+              <hr class="navbar-divider" />
+              <a class="navbar-item"> Report an issue </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-primary">
+                <strong>Sign up</strong>
+              </a>
+              <a class="button is-light"> Log in </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons">
-          <a class="button is-primary">
-            <strong>Sign up</strong>
-          </a>
-          <a class="button is-light">
-            Log in
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</nav>
+  </nav>
 </template>
 
 <style scoped>
-
+.router-link-active {
+  font-weight: bold;
+  border-bottom: 2px solid blue;
+}
 </style>
