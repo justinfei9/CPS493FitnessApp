@@ -1,10 +1,10 @@
 export interface DataEnvelope<T> {
   data: T
-  error: string
+  error?: string
 }
 
 export interface DataListEnvelope<T> {
   data: T[]
-  error: string
+  error?: string
   total: number
 }
