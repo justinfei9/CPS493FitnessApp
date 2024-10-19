@@ -21,7 +21,7 @@
     "isAdmin": false
   },
   {
-    "firstName": "Bob",
+    "firstName": "Rob",
     "lastName": "Brown",
     "emails": ["bob.brown@example.com"],
     "handle": "@bobbrown",
