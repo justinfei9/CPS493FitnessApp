@@ -9,7 +9,6 @@ const isOpen = ref(false)
     <div class="container">
       <div class="navbar-brand">
         <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="25" height="25" />
-
         <a
           role="button"
           class="navbar-burger"
@@ -27,23 +26,30 @@ const isOpen = ref(false)
 
       <div class="navbar-menu" :class="{ 'is-active': isOpen }">
         <div class="navbar-start">
-          <routerLink to="/" class="navbar-item">Home</routerLink>
-          <routerLink to="/about" class="navbar-item">About</routerLink>
-          <a class="navbar-item"> Home </a>
+          <RouterLink to="/" class="navbar-item">Home</RouterLink>
 
-          <a class="navbar-item"> Documentation </a>
+          <RouterLink to="/login" class="navbar-item">
+            <i class="fa-solid fa-person-walking"></i> My Activity</RouterLink
+          >
+
+          <RouterLink to="/statistics" class="navbar-item">
+            <i class="fa-solid fa-chart-line"></i> Statistics</RouterLink
+          >
+
+          <RouterLink to="/friends-activity" class="navbar-item">
+            <i class="fa-solid fa-users"></i>Friends Activity</RouterLink
+          >
+
+          <RouterLink to="/people-search" class="navbar-item"
+            ><i class="fa-solid fa-users"></i>People Search</RouterLink
+          >
 
           <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link"> More </a>
-
+            <a class="navbar-link">Admin </a>
             <div class="navbar-dropdown">
-              <RouterLink to="/about" class="navbar-item"> About </RouterLink>
-              <RouterLink to="/jobs" class="navbar-item" active-class="is-selected">
-                Jobs
-              </RouterLink>
-              <RouterLink to="/contact" class="navbar-item"> Contact </RouterLink>
-              <hr class="navbar-divider" />
-              <a class="navbar-item"> Report an issue </a>
+              <RouterLink to="/Users" class="navbar-item" active-class="is-selected"
+                >Users</RouterLink
+              >
             </div>
           </div>
         </div>
@@ -51,10 +57,10 @@ const isOpen = ref(false)
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-primary">
-                <strong>Sign up</strong>
-              </a>
-              <a class="button is-light"> Log in </a>
+              <RouterLink to="/Sign-Up" class="button is-light has-text-black">
+                Sign Up
+              </RouterLink>
+              <RouterLink to="/log-in" class="button is-light has-text-black"> Log In </RouterLink>
             </div>
           </div>
         </div>
@@ -66,6 +72,16 @@ const isOpen = ref(false)
 <style scoped>
 .router-link-active {
   font-weight: bold;
-  border-bottom: 2px solid blue;
+  background-color: #96dffc;
+}
+/* Updated hover state for RouterLink */
+.router-link:hover {
+  font-weight: bold; /* Bold text on hover */
+  background-color: #96df0c; /* Set your desired hover background color */
+}
+
+/* Optional: Add hover state for buttons */
+.buttons .router-link-active {
+  background-color: #dddddd; /* Change this to your desired hover color */
 }
 </style>
