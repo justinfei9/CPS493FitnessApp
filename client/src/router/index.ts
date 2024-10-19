@@ -1,9 +1,54 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { routes } from 'vue-router/auto-routes'
+import Home from '@/pages/Home.vue'
+import Login from '@/pages/Login.vue'
+import Statistics from '@/pages/Statistics.vue'
+import FriendsActivity from '@/pages/FriendsActivity.vue'
+import PeopleSearch from '@/pages/PeopleSearch.vue'
+import Users from '@/pages/Users.vue'
+import SignUp from '@/pages/Signup.vue'
+
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/log-in',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/statistics',
+    name: 'Statistics',
+    component: Statistics
+  },
+  {
+    path: '/friends-activity',
+    name: 'FriendsActivity',
+    component: FriendsActivity
+  },
+  {
+    path: '/people-search',
+    name: 'PeopleSearch',
+    component: PeopleSearch
+  },
+  {
+    path: '/users',
+    name: 'Users',
+    component: Users
+  },
+  {
+    path: '/sign-up',
+    name: 'SignUp',
+    component: SignUp
+  }
+  // Add more routes as needed
+]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes
+  history: createWebHistory(),
+  routes // short for `routes: routes`
 })
 
 export default router
