@@ -3,7 +3,8 @@
     <div class="container is-fluid">
       <div class="columns is-centered">
         <div class="column is-half">
-          <div class="login-box">
+          <div class="login-box box">
+            <!-- Added 'box' class from Bulma -->
             <h1 class="title has-text-centered">Log In</h1>
             <form @submit.prevent="handleSubmit">
               <div class="field">
@@ -39,7 +40,7 @@
               </div>
             </form>
             <p class="has-text-centered">
-              Don't have an account? <RouterLink to="/signup">Sign Up</RouterLink>
+              Don't have an account? <RouterLink to="/sign-up">Sign Up</RouterLink>
             </p>
           </div>
         </div>
@@ -68,22 +69,4 @@ const handleSubmit = () => {
 }
 </script>
 
-<style scoped>
-.section {
-  min-height: 100vh; /* Make the section take full viewport height */
-  display: flex;
-  align-items: center; /* Center content vertically */
-}
-
-.column {
-  margin: auto; /* Center the column horizontally */
-}
-
-.login-box {
-  border: 1px solid #dbdbdb; /* Border color */
-  border-radius: 5px; /* Rounded corners */
-  padding: 20px; /* Padding around the content */
-  background-color: #fff; /* Background color */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-</style>
+<style scoped></style>
