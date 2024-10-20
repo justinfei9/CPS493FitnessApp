@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { getAll, type User } from '@/models/users'
-import UsersCard from '@/components/UsersCard.vue'
+import UsersCard from '../../components/UsersCard.vue'
 
 const users = ref<User[]>([])
 users.value = getAll().data
@@ -10,27 +10,57 @@ users.value = getAll().data
 
 <template>
   <div class="container">
-    <h1 class="title">Users</h1>
-    <div class="columns is-multiline">
-      <div class="column is-one-third" v-for="user in users" :key="user.handle">
-        <UsersCard :user="user" />
-      </div>
-    </div>
+    <h1 class="title has-text-centered">Users</h1>
+    <button class="button is-primary has-text-white">
+      <i class="fas fa-plus icon-margin"></i> Add User
+    </button>
+    <table class="table is-bordered is-hoverable">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Handle</th>
+          <th>Status</th>
+          <th>Edit/Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="user in users" :key="user.handle">
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.lastName }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.handle }}</td>
+          <td>
+            <span class="tag" :class="user.isAdmin ? 'is-success' : 'is-warning'">
+              {{ user.isAdmin ? 'Admin' : 'User' }}
+            </span>
+          </td>
+          <td>
+            <button class="button is-small is-primary">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="button is-small is-danger">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <style scoped>
-.shelf {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
+.container {
+  margin-top: 2rem;
 }
-.shelf .box {
-  width: 300px;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+.table td {
+  padding-right: 5rem;
+}
+.table td button {
+  margin-right: 0.5rem;
+}
+.icon-margin {
+  margin-right: 0.5rem;
 }
 </style>

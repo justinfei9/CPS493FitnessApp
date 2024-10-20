@@ -23,10 +23,17 @@
     },
     {
       "firstName": "Rob",
-      "lastName": "Brown",
-      "email": "bob.brown@example.com",
-      "handle": "@bobbrown",
+      "lastName": "Burgler",
+      "email": "Rob.Burgler@example.com",
+      "handle": "@RobBrugler",
       "isAdmin": false
+    },
+    {
+      "firstName": "John",
+      "lastName": "Johnson",
+      "email": "Johnjohn@freakjohn.john",
+      "handle": "@freakjohn",
+      "isAdmin": true
     }
   ]
 }

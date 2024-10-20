@@ -4,8 +4,8 @@ import Login from '@/pages/Login.vue'
 import Statistics from '@/pages/Statistics.vue'
 import FriendsActivity from '@/pages/FriendsActivity.vue'
 import PeopleSearch from '@/pages/PeopleSearch.vue'
-import Users from '@/pages/Users.vue'
 import SignUp from '@/pages/Signup.vue'
+import Users from '@/pages/users/index.vue'
 
 const routes = [
   {
@@ -34,14 +34,14 @@ const routes = [
     component: PeopleSearch
   },
   {
-    path: '/users',
-    name: 'Users',
-    component: Users
-  },
-  {
     path: '/sign-up',
     name: 'SignUp',
     component: SignUp
+  },
+  {
+    path: '/users',
+    name: 'Users',
+    component: Users
   }
   // Add more routes as needed
 ]
