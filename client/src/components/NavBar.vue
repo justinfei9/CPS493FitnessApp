@@ -28,7 +28,7 @@ const isOpen = ref(false)
         <div class="navbar-start">
           <RouterLink to="/" class="navbar-item">Home</RouterLink>
 
-          <RouterLink to="/login" class="navbar-item">
+          <RouterLink to="/log-in" class="navbar-item">
             <i class="fa-solid fa-person-walking"></i> My Activity</RouterLink
           >
 

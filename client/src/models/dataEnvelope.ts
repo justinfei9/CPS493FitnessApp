@@ -1,10 +1,10 @@
 export interface DataEnvelope<T> {
-  data: T
-  error?: string
+  data: T[]
+  error: string
+  total?: number
 }
 
-export interface DataListEnvelope<T> {
+export interface DataEnvelopeList<T> {
   data: T[]
   error?: string
-  total: number
 }
