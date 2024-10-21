@@ -6,6 +6,7 @@ import FriendsActivity from '@/pages/FriendsActivity.vue'
 import PeopleSearch from '@/pages/PeopleSearch.vue'
 import SignUp from '@/pages/Signup.vue'
 import Users from '@/pages/users/index.vue'
+import workout from '@/pages/workouts/index.vue'
 
 const routes = [
   {
@@ -42,6 +43,11 @@ const routes = [
     path: '/users',
     name: 'Users',
     component: Users
+  },
+  {
+    path: '/workout',
+    name: 'Workout',
+    component: workout
   }
   // Add more routes as needed
 ]

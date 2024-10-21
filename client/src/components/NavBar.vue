@@ -36,7 +36,7 @@ const isOpen = ref(false)
             <i class="fa-solid fa-chart-line"></i> Statistics</RouterLink
           >
 
-          <RouterLink to="/friends-activity" class="navbar-item">
+          <RouterLink to="/workout" class="navbar-item">
             <i class="fa-solid fa-users"></i>Friends Activity</RouterLink
           >
 

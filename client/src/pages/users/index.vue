@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { getAll, type User } from '@/models/users'
-import UsersCard from '../../components/UsersCard.vue'
+import { UserCard } from '@components/UserCard.vue'
 
 const users = ref<User[]>([])
 users.value = getAll().data
