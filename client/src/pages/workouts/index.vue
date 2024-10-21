@@ -1,11 +1,11 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { ref } from 'vue'
-import { getAll, type Workout } from '@/models/workout'
+import { getAllWorkout, type Workout } from '@/models/workout'
 import WorkoutCard from '../../components/WorkoutCard.vue'
 
 const workouts = ref<Workout[]>([])
-workouts.value = getAll().data
+workouts.value = getAllWorkout().data
 </script>
 
 <template>

@@ -5,35 +5,40 @@
       "lastName": "Doe",
       "email": "john.doe@example.com",
       "handle": "@johndoe",
-      "isAdmin": false
+      "isAdmin": false,
+      "password": "password123"
     },
     {
       "firstName": "Justin",
       "lastName": "Feinman",
       "email": "justin.feinman@example.com",
       "handle": "@JustinFeinman",
-      "isAdmin": true
+      "isAdmin": true,
+      "password": "password123"
     },
     {
       "firstName": "Alice",
       "lastName": "Johnson",
       "email": "alice.johnson@example.com",
       "handle": "@alicejohnson",
-      "isAdmin": false
+      "isAdmin": false,
+      "password": "password123"
     },
     {
       "firstName": "Rob",
       "lastName": "Burgler",
       "email": "Rob.Burgler@example.com",
       "handle": "@RobBrugler",
-      "isAdmin": false
+      "isAdmin": false,
+      "password": "password123"
     },
     {
       "firstName": "John",
       "lastName": "Johnson",
       "email": "Johnjohn@freakjohn.john",
       "handle": "@freakjohn",
-      "isAdmin": true
+      "isAdmin": true,
+      "password": "password123"
     }
   ]
 }

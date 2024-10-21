@@ -1,11 +1,18 @@
 // models/workouts.ts
-import data from '../data/workouts.json'
+import data1 from '../data/workouts.json'
+import data2 from '../data/users.json'
 import type { DataEnvelope } from './dataEnvelope'
 import type { User } from './users'
 
-export function getAll(): DataEnvelope<Workout> {
+export function getAllUsers(): DataEnvelope<User> {
   return {
-    data: data.workouts,
+    data: data2.users,
+    error: ''
+  }
+}
+export function getAllWorkout(): DataEnvelope<Workout> {
+  return {
+    data: data1.workouts,
     error: ''
   }
 }
@@ -17,5 +24,5 @@ export interface Workout {
   duration: number
   location: string
   type: string
-  user: User
+  userHandle: string
 }
