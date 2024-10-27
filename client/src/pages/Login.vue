@@ -9,12 +9,12 @@
             <h1 class="title has-text-centered">Log In</h1>
             <form @submit.prevent="handleSubmit">
               <div class="field">
-                <label class="label">Username or Email</label>
+                <label class="label">Email</label>
                 <div class="control">
                   <input
                     class="input"
                     type="text"
-                    placeholder="Enter your username or email"
+                    placeholder="Enter your email"
                     v-model="usernameOrEmail"
                     required
                   />

@@ -13,4 +13,5 @@ export interface User {
   email: string
   handle: string
   isAdmin: boolean
+  password: string
 }
