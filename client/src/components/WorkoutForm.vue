@@ -1,8 +1,16 @@
 <script setup lang="ts">
-import { ref, defineEmits, inject } from 'vue'
+import { ref, defineEmits, inject, type Ref } from 'vue'
 import type { User } from '@/models/users'
-import { getAll } from '@/models/users'
-const loggedInUser = inject<{ userHandle: string }>('loggedInUser')
+const injected = inject<{
+  loggedInUser: Ref<User | null>
+  logInUser: (user: User) => void
+}>('loggedInUser')
+
+if (!injected) {
+  console.error('Logged in user context not found!')
+} else {
+  const { loggedInUser, logInUser } = injected
+}
 
 const emit = defineEmits(['add-workout', 'close'])
 
@@ -11,7 +19,6 @@ const date = ref('')
 const duration = ref(0)
 const location = ref('')
 const type = ref('')
-const userHandle = ref('')
 
 // Function to handle form submission
 
@@ -23,9 +30,8 @@ const submitForm = () => {
     duration: duration.value,
     location: location.value,
     type: type.value,
-    userHandle: loggedInUser // Use user handle
+    userHandle: loggedInUser.value?.firstName // Use user handle
   }
-  console.log('Injected loggedInUser:', loggedInUser)
 
   emit('add-workout', newWorkout) // Emit the new workout data
   close() // Close the modal
@@ -42,6 +48,8 @@ const close = () => {
 }
 </script>
 <template>
+  <p v-if="loggedInUser">Logged in as: {{ loggedInUser.firstName }} {{ loggedInUser.lastName }}</p>
+  <p v-else>Please log in to create a workout.</p>
   <div class="modal is-active">
     <div class="modal-background" @click="close"></div>
     <div class="modal-content">

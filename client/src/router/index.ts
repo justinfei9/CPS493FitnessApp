@@ -48,6 +48,11 @@ const routes = [
     path: '/workout',
     name: 'Workout',
     component: workout
+  },
+  {
+    path: '/workout',
+    name: 'Workout',
+    component: workout
   }
   // Add more routes as needed
 ]

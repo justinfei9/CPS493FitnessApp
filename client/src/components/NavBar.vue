@@ -3,27 +3,35 @@ import { ref, onMounted, provide } from 'vue'
 import { RouterLink } from 'vue-router'
 import { getAll } from '@/models/users'
 import type { User } from '@/models/users'
+
 const isOpen = ref(false)
 const isUserDropdownOpen = ref(false)
 const users = ref<User[]>([])
 const loggedInUser = ref<User | null>(null)
-provide('loggedInUser', users)
-console.log('Providing loggedInUser NAV:', users.value)
-
 onMounted(() => {
   const result = getAll()
   users.value = result.data // Load users from getAll()
 })
+
 // Function to handle user login
 function logInUser(user: User) {
-  loggedInUser.value = user // Set the logged-in user
+  console.log('User Object:', user) // Log the entire user object
+  loggedInUser.value = user // Log in the user
   isUserDropdownOpen.value = false // Close the dropdown after selection
+  provide('loggedInUser', {
+    loggedInUser,
+    logInUser
+  })
 }
 
 // Function to handle user logout
 function logOutUser() {
   loggedInUser.value = null // Clear logged-in user
 }
+provide('loggedInUser', {
+  loggedInUser,
+  logInUser
+})
 </script>
 
 <template>
