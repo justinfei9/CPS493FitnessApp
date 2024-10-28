@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/pages/Home.vue'
 import Login from '@/pages/Login.vue'
 import Statistics from '@/pages/Statistics.vue'
-import FriendsActivity from '@/pages/FriendsActivity.vue'
 import PeopleSearch from '@/pages/PeopleSearch.vue'
 import SignUp from '@/pages/Signup.vue'
 import Users from '@/pages/users/index.vue'
@@ -24,11 +23,6 @@ const routes = [
     path: '/statistics',
     name: 'Statistics',
     component: Statistics
-  },
-  {
-    path: '/friends-activity',
-    name: 'FriendsActivity',
-    component: FriendsActivity
   },
   {
     path: '/people-search',

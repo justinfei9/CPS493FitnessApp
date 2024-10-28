@@ -40,8 +40,6 @@ const close = () => {
 }
 </script>
 <template>
-  <p v-if="loggedInUser">Logged in as: {{ loggedInUser.firstName }} {{ loggedInUser.lastName }}</p>
-  <p v-else>Please log in to create a workout.</p>
   <div class="modal is-active">
     <div class="modal-background" @click="close"></div>
     <div class="modal-content">

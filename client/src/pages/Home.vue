@@ -3,7 +3,9 @@
   <section class="section">
     <div class="container">
       <h1 class="title">Home</h1>
-      <p class="subtitle">Welcome to the home page!</p>
+      <p class="subtitle">
+        Welcome to the home page! <br /><br />Try logging in to look at workouts and add your own
+      </p>
     </div>
   </section>
 </template>

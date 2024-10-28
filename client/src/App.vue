@@ -13,10 +13,10 @@ import NavBar from '@/components/NavBar.vue'
 </template>
 
 <style scoped>
-body{
-  background-color: aliceblue;
+body {
+  background-color: rgb(37, 58, 76);
 }
-.container{
+.container {
   background-color: white;
   box-shadow: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
   min-height: 100vh;

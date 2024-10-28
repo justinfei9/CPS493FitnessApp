@@ -22,9 +22,8 @@ const openWorkoutForm = () => {
 
 const addWorkout = (newWorkout: Workout) => {
   // Add the new workout to the workouts array
-  workouts.value.push(newWorkout)
-  console.log('New Workout Added:', newWorkout)
-  // Close the form after adding the workout
+  newWorkout.userHandle = loggedInUser.value.handle // Set the userHandle for the new workout
+  workouts.value.unshift(newWorkout) // Add the new workout to the workouts array
   isFormOpen.value = false
 }
 
