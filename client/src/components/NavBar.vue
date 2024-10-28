@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, provide } from 'vue'
+import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { getAll } from '@/models/users'
 import type { User } from '@/models/users'
@@ -16,22 +16,16 @@ onMounted(() => {
 // Function to handle user login
 function logInUser(user: User) {
   console.log('User Object:', user) // Log the entire user object
+  window.loggedInUser = user
   loggedInUser.value = user // Log in the user
   isUserDropdownOpen.value = false // Close the dropdown after selection
-  provide('loggedInUser', {
-    loggedInUser,
-    logInUser
-  })
 }
 
 // Function to handle user logout
 function logOutUser() {
   loggedInUser.value = null // Clear logged-in user
 }
-provide('loggedInUser', {
-  loggedInUser,
-  logInUser
-})
+console.log('Current User:', window.loggedInUser)
 </script>
 
 <template>
@@ -140,14 +134,13 @@ provide('loggedInUser', {
   font-weight: bold;
   background-color: #96dffc;
 }
-/* Updated hover state for RouterLink */
+
 .router-link:hover {
-  font-weight: bold; /* Bold text on hover */
-  background-color: #96df0c; /* Set your desired hover background color */
+  font-weight: bold;
+  background-color: #96df0c;
 }
 
-/* Optional: Add hover state for buttons */
 .buttons .router-link-active {
-  background-color: #dddddd; /* Change this to your desired hover color */
+  background-color: #dddddd;
 }
 </style>

@@ -1,16 +1,6 @@
 <script setup lang="ts">
-import { ref, defineEmits, inject, type Ref } from 'vue'
+import { ref, defineEmits, type Ref } from 'vue'
 import type { User } from '@/models/users'
-const injected = inject<{
-  loggedInUser: Ref<User | null>
-  logInUser: (user: User) => void
-}>('loggedInUser')
-
-if (!injected) {
-  console.error('Logged in user context not found!')
-} else {
-  const { loggedInUser, logInUser } = injected
-}
 
 const emit = defineEmits(['add-workout', 'close'])
 
@@ -20,6 +10,8 @@ const duration = ref(0)
 const location = ref('')
 const type = ref('')
 
+const loggedInUser: Ref<User | null> = ref(window.loggedInUser)
+console.log('Logged In User:', loggedInUser.value)
 // Function to handle form submission
 
 const submitForm = () => {
