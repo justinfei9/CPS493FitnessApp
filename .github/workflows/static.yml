@@ -38,7 +38,7 @@ jobs:
           version: 9.0.0
       - name: build vue
         run: |
-          cd Client
+          cd client
           pnpm install
           pnpm run build
 
