@@ -7,6 +7,7 @@ import PeopleSearch from '@/pages/PeopleSearch.vue'
 import SignUp from '@/pages/Signup.vue'
 import Users from '@/pages/users/index.vue'
 import workout from '@/pages/workouts/index.vue'
+import MyActivity from '@/pages/MyActivity.vue'
 
 const routes = [
   {
@@ -50,9 +51,9 @@ const routes = [
     component: workout
   },
   {
-    path: '/workout',
-    name: 'Workout',
-    component: workout
+    path: '/my-activity',
+    name: 'activity',
+    component: MyActivity
   }
   // Add more routes as needed
 ]

@@ -51,10 +51,12 @@ console.log('Current User:', window.loggedInUser)
       <div class="navbar-menu" :class="{ 'is-active': isOpen }">
         <div class="navbar-start">
           <RouterLink to="/" class="navbar-item">Home</RouterLink>
-
-          <RouterLink to="/log-in" class="navbar-item">
-            <i class="fa-solid fa-person-walking"></i> My Activity</RouterLink
-          >
+          <RouterLink v-if="loggedInUser" to="/my-activity" class="navbar-item">
+            <i class="fa-solid fa-person-walking"></i> My Activity
+          </RouterLink>
+          <RouterLink v-else to="/log-in" class="navbar-item" active-class="is-selected">
+            <i class="fa-solid fa-person-walking"></i> My Activity
+          </RouterLink>
 
           <RouterLink to="/statistics" class="navbar-item">
             <i class="fa-solid fa-chart-line"></i> Statistics</RouterLink
