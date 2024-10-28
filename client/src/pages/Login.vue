@@ -5,7 +5,6 @@
       <div class="columns is-centered">
         <div class="column is-half">
           <div class="login-box box">
-            <!-- Added 'box' class from Bulma -->
             <h1 class="title has-text-centered">Log In</h1>
             <form @submit.prevent="handleSubmit">
               <div class="field">

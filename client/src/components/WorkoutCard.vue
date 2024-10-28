@@ -27,6 +27,7 @@ const user = computed(() => {
       <p v-if="user">
         <strong>User:</strong> {{ user.firstName }} {{ user.lastName }} ({{ user.handle }})
       </p>
+      <p v-else><strong>User:</strong> Not found</p>
     </div>
   </div>
 </template>

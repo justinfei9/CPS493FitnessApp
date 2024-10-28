@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, provide } from 'vue'
 import { RouterLink } from 'vue-router'
 import { getAll } from '@/models/users'
 import type { User } from '@/models/users'
@@ -7,6 +7,8 @@ const isOpen = ref(false)
 const isUserDropdownOpen = ref(false)
 const users = ref<User[]>([])
 const loggedInUser = ref<User | null>(null)
+provide('loggedInUser', users)
+console.log('Providing loggedInUser NAV:', users.value)
 
 onMounted(() => {
   const result = getAll()
