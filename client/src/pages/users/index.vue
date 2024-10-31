@@ -1,19 +1,34 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { getAll, type User } from '@/models/users'
-import UsersCard from '../../components/UsersCard.vue'
+import UsersCard from '@/components/UsersCard.vue'
+import UserForm from '@/components/UserForm.vue'
 
-// Simulating a logged-in user and their role
-const loggedInUser = ref(window.loggedInUser)
+const loggedInUser = ref<User | null>(window.loggedInUser)
 const users = ref<User[]>([])
 
-users.value = getAll().data
+// Toggle to show/hide the add user form
+const isAddingUser = ref(false)
+
+// Fetch users data
+onMounted(async () => {
+  const result = await getAll()
+  users.value = result.data
+})
 
 // Check if the user is logged in and is an admin
-const isAdminUser = computed(() => {
-  return loggedInUser.value && loggedInUser.value.isAdmin
-})
+const isAdminUser = computed(() => loggedInUser.value?.isAdmin || false)
+
+// Function to add a new user to the list
+function addUser(user: User) {
+  users.value.push(user)
+  isAddingUser.value = false // Close the form after adding
+}
+
+function deleteUser(userHandle: string) {
+  users.value = users.value.filter((user) => user.handle !== userHandle)
+}
 </script>
 
 <template>
@@ -22,9 +37,10 @@ const isAdminUser = computed(() => {
 
     <!-- Conditional rendering based on user's admin status -->
     <div v-if="isAdminUser">
-      <button class="button is-primary has-text-white">
+      <button class="button is-primary has-text-white" @click="isAddingUser = true">
         <i class="fas fa-plus icon-margin"></i> Add User
       </button>
+      <UserForm v-if="isAddingUser" @submit="addUser" @cancel="isAddingUser = false" />
       <table class="table is-bordered is-hoverable">
         <thead>
           <tr>
@@ -37,25 +53,7 @@ const isAdminUser = computed(() => {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in users" :key="user.handle">
-            <td>{{ user.firstName }}</td>
-            <td>{{ user.lastName }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.handle }}</td>
-            <td>
-              <span class="tag" :class="user.isAdmin ? 'is-success' : 'is-warning'">
-                {{ user.isAdmin ? 'Admin' : 'User' }}
-              </span>
-            </td>
-            <td>
-              <button class="button is-small is-primary">
-                <i class="fas fa-edit"></i>
-              </button>
-              <button class="button is-small is-danger">
-                <i class="fas fa-trash"></i>
-              </button>
-            </td>
-          </tr>
+          <UsersCard v-for="user in users" :key="user.handle" :user="user" @delete="deleteUser" />
         </tbody>
       </table>
     </div>

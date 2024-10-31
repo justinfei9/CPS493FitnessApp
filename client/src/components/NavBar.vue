@@ -145,4 +145,7 @@ console.log('Current User:', window.loggedInUser)
 .buttons .router-link-active {
   background-color: #dddddd;
 }
+.navbar-dropdown {
+  cursor: pointer;
+}
 </style>
