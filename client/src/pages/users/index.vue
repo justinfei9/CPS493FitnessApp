@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { getAll, type User } from '@/models/users'
