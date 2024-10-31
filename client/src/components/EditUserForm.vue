@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import type { User } from '@/models/users'
 
 // Props
 const props = defineProps<{
   user: User
 }>()
+
 const emit = defineEmits(['submit', 'cancel'])
+
 // Reactive form state
 const form = ref({
   firstName: '',
@@ -16,23 +18,33 @@ const form = ref({
   isAdmin: false
 })
 
-// Watch for changes in the user prop to populate the form for editing
+// Populate form data when the component is mounted
+onMounted(() => {
+  form.value = { ...props.user }
+})
+
+// Watch for changes in the user prop to populate the form
 watch(
   () => props.user,
   (newUser) => {
     if (newUser) {
       form.value = { ...newUser }
     }
-  }
+  },
+  { immediate: true }
 )
 
 // Emit the user data back to the parent component
 const submitForm = () => {
   emit('submit', { ...form.value }) // Emit the submitted user data
 }
+
+// Handle cancel action
+const cancelForm = () => {
+  emit('cancel') // Emit the cancel event
+}
 </script>
 
-<style scoped></style>
 <template>
   <div class="modal is-active">
     <div class="modal-background"></div>
@@ -75,10 +87,10 @@ const submitForm = () => {
           </div>
           <div class="field is-grouped is-grouped-right">
             <div class="control">
-              <button class="button is-link">Update</button>
+              <button type="submit" class="button is-link">Update</button>
             </div>
             <div class="control">
-              <button type="button" class="button is-light" @click="$emit('cancel')">Cancel</button>
+              <button type="button" class="button is-danger" @click="cancelForm">Cancel</button>
             </div>
           </div>
         </form>
@@ -87,6 +99,4 @@ const submitForm = () => {
   </div>
 </template>
 
-<scoped style>
-
-</scoped>
+<style scoped></style>

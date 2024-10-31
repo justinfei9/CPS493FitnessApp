@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import type { User } from '@/models/users'
 import EditUserForm from '@/components/EditUserForm.vue'
 
+// Props for single user row data
 const props = defineProps<{
   user: User
 }>()
@@ -13,21 +14,24 @@ const emit = defineEmits(['edit', 'delete'])
 const isEditModalVisible = ref(false)
 const editedUser = ref<User | null>(null)
 
+// Show the edit modal
 const handleEdit = () => {
   editedUser.value = { ...props.user } // Copy the user data for editing
   isEditModalVisible.value = true // Show the edit form
 }
 
+// Delete user
 const handleDelete = () => {
   emit('delete', props.user.handle) // Emit the user's handle for deletion
 }
 
-// Handle submission from EditUserForm
+// Handle form submission from EditUserForm
 const handleFormSubmit = (updatedUser: User) => {
   emit('edit', updatedUser) // Emit the updated user data
   isEditModalVisible.value = false // Hide the edit form
 }
 
+// Handle cancel action
 const handleCancel = () => {
   isEditModalVisible.value = false // Hide the edit form on cancel
 }
@@ -58,21 +62,7 @@ const handleCancel = () => {
   <EditUserForm
     v-if="isEditModalVisible"
     :user="editedUser!"
-    @click="handleEdit"
     @submit="handleFormSubmit"
     @cancel="handleCancel"
   />
 </template>
-
-<style scoped>
-.user-card {
-  border: 1px solid #ddd;
-  padding: 1rem;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-}
-.user-card:hover {
-  transform: scale(1.03);
-}
-</style>

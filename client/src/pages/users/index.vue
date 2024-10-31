@@ -26,6 +26,15 @@ function addUser(user: User) {
   isAddingUser.value = false // Close the form after adding
 }
 
+// Update a specific user in the list
+function updateUser(updatedUser: User) {
+  const index = users.value.findIndex((user) => user.handle === updatedUser.handle)
+  if (index !== -1) {
+    users.value[index] = updatedUser
+  }
+}
+
+// Function to delete a user from the list
 function deleteUser(userHandle: string) {
   users.value = users.value.filter((user) => user.handle !== userHandle)
 }
@@ -41,6 +50,7 @@ function deleteUser(userHandle: string) {
         <i class="fas fa-plus icon-margin"></i> Add User
       </button>
       <UserForm v-if="isAddingUser" @submit="addUser" @cancel="isAddingUser = false" />
+
       <table class="table is-bordered is-hoverable">
         <thead>
           <tr>
@@ -53,7 +63,14 @@ function deleteUser(userHandle: string) {
           </tr>
         </thead>
         <tbody>
-          <UsersCard v-for="user in users" :key="user.handle" :user="user" @delete="deleteUser" />
+          <!-- Listen for both edit and delete events from UsersCard -->
+          <UsersCard
+            v-for="user in users"
+            :key="user.handle"
+            :user="user"
+            @edit="updateUser"
+            @delete="deleteUser"
+          />
         </tbody>
       </table>
     </div>
