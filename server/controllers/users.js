@@ -7,8 +7,8 @@ app
     res.send(model.getAll());
   })
   .get("/:id", function (req, res) {
-    const id = parseInt(req.params.id, 10);
-    const user = model.get(id);
+    const id = req.params.id;
+    const user = model.get(+id);
     res.send(user);
   })
   .post("/", function (req, res) {
@@ -16,13 +16,13 @@ app
     res.send(user);
   })
   .patch("/:id", function (req, res) {
-    const id = parseInt(req.params.id, 10);
-    const user = model.update(id, req.body);
+    const id = req.params.id;
+    const user = model.update(+id, req.body);
     res.send(user);
   })
   .delete("/:id", function (req, res) {
     const id = req.params.id;
-    const ret = mode.remove(id);
+    const ret = model.remove(+id);
     res.send(ret);
   });
 
