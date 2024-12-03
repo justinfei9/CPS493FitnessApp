@@ -58,8 +58,8 @@ function deleteUser(userHandle: string) {
             <th>Last Name</th>
             <th>Email</th>
             <th>Handle</th>
-            <th>Status</th>
             <th>ID</th>
+            <th>Role</th>
             <th>Edit/Delete</th>
           </tr>
         </thead>
