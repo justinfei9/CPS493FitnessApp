@@ -17,9 +17,11 @@ app
   .get("/about", function (req, res) {
     res.send("About Us");
   })
-  .use("/users", userController)
-  .use("/workouts", WorkoutController);
-
+  .use("/api/v1/users", userController)
+  .use("/api/v1/workouts", WorkoutController)
+  .get("*", (req, res) => {
+    res.sendFile(__dirname + "/dist/index.html");
+  });
 app.listen(port, function () {
   console.log("Server is running on http://localhost:" + port);
 });
