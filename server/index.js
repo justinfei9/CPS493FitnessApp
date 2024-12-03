@@ -11,10 +11,10 @@ app.use(express.static(__dirname + "/dist"));
 
 // Controllers
 app
-  .get("/", function (req, res) {
+  .get("/", function (req, res, next) {
     res.send("Hello World");
   })
-  .get("/about", function (req, res) {
+  .get("/about", function (req, res, next) {
     res.send("About Us");
   })
   .use("/api/v1/users", userController)

@@ -8,27 +8,27 @@ const data = { items: require("../data/workouts.json").workouts };
 
 /**
  * Get all workouts
- * @returns {Workout[]}
+ * @returns {Promise<Workout[]>}
  */
-function getAll() {
+async function getAll() {
   return data.items;
 }
 
 /**
  * Get a workout by id
  * @param {number} id
- * @returns {Workout}
+ * @returns {Promise<Workout>}
  */
-function get(id) {
+async function get(id) {
   return data.items.find((workout) => workout.id == id);
 }
 
 /**
  * Add a new workout
  * @param {Workout} workout
- * @returns {Workout}
+ * @returns {Promise<Workout>}
  */
-function add(workout) {
+async function add(workout) {
   workout.id =
     data.items.reduce((prev, x) => (x.id > prev ? x.id : prev), 0) + 1;
   data.items.push(workout);
@@ -39,9 +39,9 @@ function add(workout) {
  * Update a workout
  * @param {number} id
  * @param {Workout} workout
- * @returns {Workout}
+ * @returns {Promise<Workout>}
  */
-function update(id, workout) {
+async function update(id, workout) {
   const workoutToUpdate = get(id);
   Object.assign(workoutToUpdate, workout);
   return workoutToUpdate;
@@ -50,9 +50,9 @@ function update(id, workout) {
 /**
  * Remove a workout
  * @param {number} id
- * @returns {{ success: boolean, message: string, id: number }}
+ * @returns {Promise<{ success: boolean, message: string, id: number }>}
  */
-function remove(id) {
+async function remove(id) {
   const workoutIndex = data.items.findIndex((workout) => workout.id == id);
   if (workoutIndex !== -1) {
     data.items.splice(workoutIndex, 1);

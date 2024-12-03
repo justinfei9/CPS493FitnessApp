@@ -7,25 +7,25 @@ const data = { items: require("../data/users.json").users };
  */
 /**
  * Get all users
- * @returns {User[]}
+ * @returns {Promise<User[]>}
  */
-function getAll() {
+async function getAll() {
   return data.items;
 }
 /**
  * Get a user by id
  * @param {number} id
- * @returns {User}
+ * @returns {Promise<User>}
  */
-function get(id) {
+async function get(id) {
   return data.items.find((user) => user.id == id);
 }
 /**
  * Add a new user
  * @param {User} user
- * @returns {User}
+ * @returns {Promise<User>}
  */
-function add(user) {
+async function add(user) {
   user.id = data.items.reduce((prev, x) => (x.id > prev ? x.id : prev), 0) + 1;
   data.items.push(user);
   return user;
@@ -34,9 +34,9 @@ function add(user) {
  * Update a user
  * @param {number} id
  * @param {User} user
- * @returns {User}
+ * @returns {Promise<User>}
  */
-function update(id, user) {
+async function update(id, user) {
   const userToUpdate = get(id);
   Object.assign(userToUpdate, user);
   return userToUpdate;
@@ -45,9 +45,9 @@ function update(id, user) {
 /**
  * Remove a user
  * @param {number} id
- * @returns {{ success: boolean, message: string, id: number }}
+ * @returns {Promise<{ success: boolean, message: string, id: number }>}
  */
-function remove(id) {
+async function remove(id) {
   const userIndex = data.items.findIndex((user) => user.id == id);
   data.items.splice(userIndex, 1);
   return { success: true, message: "User deleted", id: id };
