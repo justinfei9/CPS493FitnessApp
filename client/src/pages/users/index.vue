@@ -59,6 +59,7 @@ function deleteUser(userHandle: string) {
             <th>Email</th>
             <th>Handle</th>
             <th>Status</th>
+            <th>ID</th>
             <th>Edit/Delete</th>
           </tr>
         </thead>

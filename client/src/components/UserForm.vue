@@ -11,7 +11,8 @@ const formUser = ref<User>({
   email: '',
   handle: '',
   isAdmin: false,
-  password: ''
+  password: '',
+  id: 0
 })
 
 // Handle form submission
@@ -28,7 +29,8 @@ function resetForm() {
     email: '',
     handle: '',
     isAdmin: false,
-    password: ''
+    password: '',
+    id: 0
   }
 }
 
@@ -77,6 +79,10 @@ function cancelForm() {
           <label class="checkbox">
             <input type="checkbox" v-model="formUser.isAdmin" /> Admin
           </label>
+        </div>
+        <div class="field">
+          <label class="label">ID</label>
+          <input class="input" v-model="formUser.id" type="text" placeholder="Enter ID" />
         </div>
       </section>
       <footer class="modal-card-foot">

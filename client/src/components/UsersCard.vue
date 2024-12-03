@@ -39,6 +39,7 @@ const handleCancel = () => {
     <td>{{ user.lastName }}</td>
     <td>{{ user.email }}</td>
     <td>{{ user.handle }}</td>
+    <td>{{ user.id }}</td>
     <td>
       <span class="tag" :class="user.isAdmin ? 'is-success' : 'is-warning'">
         {{ user.isAdmin ? 'Admin' : 'User' }}

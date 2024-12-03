@@ -1,0 +1,19 @@
+###
+GET http://localhost:3000/users
+
+###
+DELETE http://localhost:3000/users/2
+
+
+###
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "firstName": "moshe",
+  "lastName": "plotkin",
+  "email": "moshe.plotkin@example.com",
+  "handle": "@mosheplotkin",
+  "isAdmin": false,
+  "password": "securepassword123"
+}

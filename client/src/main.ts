@@ -19,7 +19,8 @@ window.loggedInUser = {
   email: 'test.test@example.com',
   handle: '@test',
   isAdmin: false,
-  password: 'password123'
+  password: 'password123',
+  id: 1
 }
 const app = createApp(App)
 
