@@ -8,9 +8,22 @@ const isOpen = ref(false)
 const isUserDropdownOpen = ref(false)
 const users = ref<User[]>([])
 const loggedInUser = ref<User | null>(null)
-onMounted(() => {
-  const result = getAll()
-  users.value = result.data // Load users from getAll()
+
+onMounted(async () => {
+  try {
+    const result = await getAll()
+    console.log('API Result:', result)
+
+    if (Array.isArray(result)) {
+      users.value = result // Directly assign if response is an array
+    } else if (result && result.data) {
+      users.value = result.data // Handle structured responses
+    } else {
+      console.error('Unexpected response format:', result)
+    }
+  } catch (error) {
+    console.error('Failed to load users:', error)
+  }
 })
 
 // Function to handle user login

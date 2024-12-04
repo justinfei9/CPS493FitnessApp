@@ -3,9 +3,9 @@
 import WorkoutCard from '../../components/WorkoutCard.vue'
 import { ref } from 'vue'
 import type { Workout } from '@/models/workout'
-import { getAllWorkout } from '@/models/workout'
 
-const workouts = ref<Workout[]>(getAllWorkout().data)
+const workouts = ref<Workout[]>([])
+console.log('workoutcard loaded')
 </script>
 <template>
   <div class="container">

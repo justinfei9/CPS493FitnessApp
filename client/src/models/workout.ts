@@ -2,7 +2,8 @@ import type { DataEnvelope, DataListEnvelope } from './dataEnvelope'
 import { api } from './myfetch'
 
 export async function getAll() {
-  return api<DataListEnvelope<Workout>>('Workout')
+  const response = await api<DataListEnvelope<Workout>>('Workout')
+  return response
 }
 export async function getById(id: number) {
   return api<DataEnvelope<Workout>>(`Workout/${id}`)

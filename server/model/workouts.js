@@ -42,7 +42,7 @@ async function add(workout) {
  * @returns {Promise<Workout>}
  */
 async function update(id, workout) {
-  const workoutToUpdate = get(id);
+  const workoutToUpdate = await get(id);
   Object.assign(workoutToUpdate, workout);
   return workoutToUpdate;
 }

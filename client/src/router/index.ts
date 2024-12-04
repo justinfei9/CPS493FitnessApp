@@ -7,7 +7,8 @@ import SignUp from '@/pages/Signup.vue'
 import Users from '@/pages/users/index.vue'
 import workout from '@/pages/workouts/index.vue'
 import MyActivity from '@/pages/MyActivity.vue'
-
+import AdminUsers from '@/pages/admin/users/index.vue'
+import AdminEditUser from '@/pages/admin/users/edit_[[id]].vue'
 const routes = [
   {
     path: '/',
@@ -48,8 +49,19 @@ const routes = [
     path: '/my-activity',
     name: 'activity',
     component: MyActivity
-  }
+  },
   // Add more routes as needed
+  {
+    path: '/admin/users',
+    name: 'AdminUsers',
+    component: AdminUsers
+  },
+  {
+    path: '/admin/users/edit_:id?',
+    name: 'AdminEditUser',
+    component: AdminEditUser,
+    props: true // Pass route params as props to the component
+  }
 ]
 
 const router = createRouter({

@@ -1,13 +1,13 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
+import type { Workout } from '@/models/workout'
 import { ref, computed } from 'vue'
-import { getAllWorkout } from '@/models/workout'
 
 // Assuming you have a global way to get the logged-in user
 const loggedInUser = ref(window.loggedInUser)
 
 // Fetch all workouts and filter by logged-in user
-const workouts = ref(getAllWorkout().data)
+const workouts = ref<Workout[]>([])
 const userWorkouts = computed(() => {
   return workouts.value.filter((workout) => workout.userHandle === loggedInUser.value.handle)
 })

@@ -7,7 +7,7 @@ const props = defineProps<{
   workout: Workout
 }>()
 
-const usersEnvelope = getAll() // Fetch the data envelope
+const usersEnvelope = await getAll() // Fetch the data envelope
 const users = usersEnvelope.data // Extract the actual users array
 
 // Find the user associated with this workout
@@ -15,6 +15,7 @@ const user = computed(() => {
   return users.find((u) => u.handle === props.workout.userHandle) || null
 })
 const loggedInUser: Ref<User | null> = ref(window.loggedInUser)
+console.log('workoutcard loaded')
 </script>
 
 <template>

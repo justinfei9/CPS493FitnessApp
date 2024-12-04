@@ -1,17 +1,19 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
+import { ref, computed, onMounted } from 'vue'
 import WorkoutCard from '@/components/WorkoutCard.vue'
 import WorkoutForm from '@/components/WorkoutForm.vue'
-import { ref, computed } from 'vue'
+import { getAll } from '@/models/workout'
 import type { Workout } from '@/models/workout'
-import { getAllWorkout } from '@/models/workout'
 
-const workouts = ref<Workout[]>(getAllWorkout().data)
+const workouts = ref<Workout[]>([])
 const isFormOpen = ref(false)
-// Assuming you have a global way to get the logged-in user
-const loggedInUser = ref(window.loggedInUser) // Make sure this is set correctly
+const loggedInUser = ref(window.loggedInUser)
 
-// Compute the user's workouts
+onMounted(async () => {
+  const response = await getAll()
+  workouts.value = response.data // Access the 'data' property from the response
+})
 const userWorkouts = computed(() => {
   return workouts.value.filter((workout) => workout.userHandle === loggedInUser.value.handle)
 })
@@ -21,9 +23,8 @@ const openWorkoutForm = () => {
 }
 
 const addWorkout = (newWorkout: Workout) => {
-  // Add the new workout to the workouts array
-  newWorkout.userHandle = loggedInUser.value.handle // Set the userHandle for the new workout
-  workouts.value.unshift(newWorkout) // Add the new workout to the workouts array
+  newWorkout.userHandle = loggedInUser.value.handle
+  workouts.value.unshift(newWorkout)
   isFormOpen.value = false
 }
 
