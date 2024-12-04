@@ -4,26 +4,37 @@ const app = express.Router();
 
 app
   .get("/", function (req, res, next) {
-    res.send(model.getAll());
+    model
+      .getAll()
+      .then((x) => res.send(x))
+      .catch(next);
   })
   .get("/:id", function (req, res, next) {
     const id = req.params.id;
-    const user = model.get(+id);
-    res.send(user);
+    model
+      .get(+id)
+      .then((x) => res.send(x))
+      .catch(next);
   })
   .post("/", function (req, res, next) {
-    const user = model.add(req.body);
-    res.send(user);
+    model
+      .add(req.body)
+      .then((x) => res.send(x))
+      .catch(next);
   })
   .patch("/:id", function (req, res, next) {
     const id = req.params.id;
-    const user = model.update(+id, req.body);
-    res.send(user);
+    model
+      .update(+id, req.body)
+      .then((x) => res.send(x))
+      .catch(next);
   })
   .delete("/:id", function (req, res, next) {
     const id = req.params.id;
-    const ret = model.remove(+id);
-    res.send(ret);
+    model
+      .remove(+id)
+      .then((x) => res.send(x))
+      .catch(next);
   });
 
 module.exports = app; // Export the router
