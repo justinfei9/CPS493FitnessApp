@@ -1,9 +1,20 @@
-import data from '../data/users.json'
 import type { DataEnvelope, DataListEnvelope } from './dataEnvelope'
-import { rest } from './myfetch'
+import { api } from './myfetch'
 
 export async function getAll() {
-  return rest<DataListEnvelope<User>>('http://localhost:3000/api/v1/Users')
+  return api<DataListEnvelope<User>>('Users')
+}
+export async function getById(id: number) {
+  return api<DataEnvelope<User>>(`Users/${id}`)
+}
+export function create(user: User) {
+  return api<DataEnvelope<User>>('Users', user)
+}
+export function update(user: User) {
+  return api<DataEnvelope<User>>(`Users/${user.id}`, user, 'PATCH')
+}
+export function remove(id: number) {
+  return api<DataEnvelope<User>>(`Users/${id}`, undefined, 'DELETE')
 }
 export interface User {
   firstName: string
