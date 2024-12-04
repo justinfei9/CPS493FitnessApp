@@ -56,7 +56,12 @@ async function remove(id) {
   const workoutIndex = data.items.findIndex((workout) => workout.id == id);
   if (workoutIndex !== -1) {
     data.items.splice(workoutIndex, 1);
-    return { success: true, message: "Workout deleted", id: id };
+    throw {
+      isSuccess: false,
+      message: "Item not found",
+      data: id,
+      status: 404,
+    };
   } else {
     return { success: false, message: "Workout not found", id: id };
   }
