@@ -12,9 +12,14 @@ const users = ref<User[]>([])
 const isAddingUser = ref(false)
 
 // Fetch users data
-onMounted(async () => {
-  const result = await getAll()
-  users.value = result.data
+onMounted(() => {
+  getAll()
+    .then((result) => {
+      users.value = result.data
+    })
+    .catch((error) => {
+      console.error('Failed to fetch users:', error)
+    })
 })
 
 // Check if the user is logged in and is an admin
