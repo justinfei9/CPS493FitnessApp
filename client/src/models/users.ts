@@ -1,10 +1,11 @@
 import data from '../data/users.json'
-import type { DataEnvelope } from './dataEnvelope'
+import type { DataEnvelope, DataListEnvelope } from './dataEnvelope'
 
-export function getAll(): DataEnvelope<User> {
+export function getAll(): DataListEnvelope<User> {
   return {
     data: data.users,
-    error: ''
+    total: data.users.length,
+    isSuccess: true
   }
 }
 export interface User {

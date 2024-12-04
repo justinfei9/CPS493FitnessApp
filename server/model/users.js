@@ -3,54 +3,77 @@
 const data = { items: require("../data/users.json").users };
 
 /**
+ * @template T
+ * @typedef {import("../../client/src/models/dataEnvelope").DataEnvelope} DataEnvelope
+ * @typedef {import("../../client/src/models/dataEnvelope").DataListEnvelope} DataListEnvelope
+ */
+
+/**
  * @typedef {import("../../client/src/models/users").User} User
  */
+
 /**
  * Get all users
- * @returns {Promise<User[]>}
+ * @returns {Promise<DataListEnvelope<User>>}
  */
 async function getAll() {
-  return data.items;
+  return {
+    isSuccess: true,
+    data: data.items,
+    total: data.items.length,
+  };
 }
 /**
  * Get a user by id
  * @param {number} id
- * @returns {Promise<User>}
+ * @returns {Promise<DataEnvelope<User>>}
  */
 async function get(id) {
-  return data.items.find((user) => user.id == id);
+  const item = data.items.find((user) => user.id == id);
+  return {
+    isSuccess: !!item,
+    data: item,
+  };
 }
 /**
  * Add a new user
  * @param {User} user
- * @returns {Promise<User>}
+ * @returns {Promise<DataEnvelope<User>>}
  */
 async function add(user) {
   user.id = data.items.reduce((prev, x) => (x.id > prev ? x.id : prev), 0) + 1;
   data.items.push(user);
-  return user;
+  return {
+    isSuccess: true,
+    data: user,
+  };
 }
 /**
  * Update a user
  * @param {number} id
  * @param {User} user
- * @returns {Promise<User>}
+ * @returns {Promise<DataEnvelope<User>>}
  */
 async function update(id, user) {
   const userToUpdate = get(id);
   Object.assign(userToUpdate, user);
-  return userToUpdate;
+  return {
+    isSuccess: true,
+    data: userToUpdate,
+  };
 }
 
 /**
  * Remove a user
  * @param {number} id
- * @returns {Promise<{ success: boolean, message: string, id: number }>}
+ * @returns {Promise<DataEnvelope<number>>}
  */
 async function remove(id) {
   const userIndex = data.items.findIndex((user) => user.id == id);
+  if (userIndex === -1)
+    throw { isSuccess: false, message: "User not found", data: id };
   data.items.splice(userIndex, 1);
-  return { success: true, message: "User deleted", id: id };
+  return { isSuccess: true, message: "Item deleted", data: id };
 }
 
 module.exports = {
