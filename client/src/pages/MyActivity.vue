@@ -11,7 +11,8 @@ const isLoading = ref(true)
 const workouts = ref<Workout[]>([])
 getAllWorkout()
   .then((data) => {
-    workouts.value = data?.data || []
+    // If the response is an array of workouts directly:
+    workouts.value = Array.isArray(data) ? data : []
     console.log('Fetched workouts:', workouts.value)
     isLoading.value = false
   })
@@ -20,6 +21,7 @@ getAllWorkout()
     workouts.value = []
     isLoading.value = false
   })
+
 // Filter workouts by logged-in user
 const userWorkouts = computed(() => {
   console.log('Workouts:', workouts.value)
@@ -30,7 +32,8 @@ const userWorkouts = computed(() => {
 })
 const isFormOpen = ref(false)
 // Assuming you have a global way to get the logged-in user
-const loggedInUser = ref(window.loggedInUser) // Make sure this is set correctly
+const loggedInUser = ref(window.loggedInUser)
+console.log('Logged In User:', loggedInUser.value)
 
 // Compute the user's workouts
 

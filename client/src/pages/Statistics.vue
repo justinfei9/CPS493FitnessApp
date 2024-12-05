@@ -9,7 +9,16 @@ const loggedInUser = ref(window.loggedInUser)
 
 // Fetch all workouts and filter by logged-in user
 const workouts = ref<Workout[]>([])
-getAllWorkout().then((data) => (workouts.value = data.data))
+getAllWorkout()
+  .then((data) => {
+    // If the response is an array of workouts directly:
+    workouts.value = Array.isArray(data) ? data : []
+    console.log('Fetched workouts:', workouts.value)
+  })
+  .catch((err) => {
+    console.error('Error fetching workouts:', err)
+    workouts.value = []
+  })
 
 // Filter workouts by logged-in user
 const userWorkouts = computed(() => {
