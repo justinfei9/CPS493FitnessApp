@@ -8,10 +8,8 @@ const isOpen = ref(false)
 const isUserDropdownOpen = ref(false)
 const users = ref<User[]>([])
 const loggedInUser = ref<User | null>(null)
-onMounted(() => {
-  const result = getAll()
-  users.value = result.data // Load users from getAll()
-})
+
+getAll().then((data) => (users.value = data.data))
 
 // Function to handle user login
 function logInUser(user: User) {
