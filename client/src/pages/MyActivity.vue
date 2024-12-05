@@ -6,15 +6,33 @@ import { ref, computed } from 'vue'
 import type { Workout } from '@/models/workout'
 import { getAllWorkout } from '@/models/workout'
 
-const workouts = ref<Workout[]>(getAllWorkout().data)
+// Fetch all workouts and filter by logged-in user
+const isLoading = ref(true)
+const workouts = ref<Workout[]>([])
+getAllWorkout()
+  .then((data) => {
+    workouts.value = data?.data || []
+    console.log('Fetched workouts:', workouts.value)
+    isLoading.value = false
+  })
+  .catch((err) => {
+    console.error('Error fetching workouts:', err)
+    workouts.value = []
+    isLoading.value = false
+  })
+// Filter workouts by logged-in user
+const userWorkouts = computed(() => {
+  console.log('Workouts:', workouts.value)
+  console.log('Logged In User:', loggedInUser.value)
+  if (!workouts.value || !Array.isArray(workouts.value)) return []
+  if (!loggedInUser.value) return []
+  return workouts.value.filter((workout) => workout.userHandle === loggedInUser.value.handle)
+})
 const isFormOpen = ref(false)
 // Assuming you have a global way to get the logged-in user
 const loggedInUser = ref(window.loggedInUser) // Make sure this is set correctly
 
 // Compute the user's workouts
-const userWorkouts = computed(() => {
-  return workouts.value.filter((workout) => workout.userHandle === loggedInUser.value.handle)
-})
 
 const openWorkoutForm = () => {
   isFormOpen.value = true

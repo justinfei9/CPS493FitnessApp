@@ -3,20 +3,15 @@ import data1 from '../data/workouts.json'
 import data2 from '../data/users.json'
 import type { DataListEnvelope } from './dataEnvelope'
 import type { User } from './users'
+import { rest } from './myfetch'
 
-export function getAllUsers(): DataListEnvelope<User> {
-  return {
-    data: data2.users,
-    total: data2.users.length,
-    isSuccess: true
-  }
+export async function getAllUsers() {
+  return rest<DataListEnvelope<User>>('http://localhost:3000/api/v1/users')
 }
-export function getAllWorkout(): DataListEnvelope<Workout> {
-  return {
-    data: data1.workouts,
-    total: data2.users.length,
-    isSuccess: true
-  }
+export async function getAllWorkout() {
+  const response = await rest<DataListEnvelope<Workout>>('http://localhost:3000/api/v1/Workouts')
+  console.log('Fetched Workouts:', response) // Add this line
+  return response
 }
 
 export interface Workout {

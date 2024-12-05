@@ -5,11 +5,15 @@ import { ref } from 'vue'
 import type { Workout } from '@/models/workout'
 import { getAllWorkout } from '@/models/workout'
 
-const workouts = ref<Workout[]>(getAllWorkout().data)
+// Fetch all workouts and filter by logged-in user
+const workouts = ref<Workout[]>([])
+getAllWorkout().then((data) => (workouts.value = data.data))
+
+// Filter workouts by logged-in user
 </script>
 <template>
   <div class="container">
-    <h1 class="title has-text-centered">Workouts</h1>
+    <h1 class="title has-text-centered">Workouts!</h1>
 
     <!-- Show the workout form conditionally -->
 
