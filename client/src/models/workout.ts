@@ -1,17 +1,30 @@
 // models/workouts.ts
 import data1 from '../data/workouts.json'
 import data2 from '../data/users.json'
-import type { DataListEnvelope } from './dataEnvelope'
 import type { User } from './users'
-import { rest } from './myfetch'
+import type { DataEnvelope, DataListEnvelope } from './dataEnvelope'
+import { api } from './myfetch'
 
-export async function getAllUsers() {
-  return rest<DataListEnvelope<User>>('http://localhost:3000/api/v1/users')
-}
-export async function getAllWorkout() {
+/*export async function getAllWorkout() {
   const response = await rest<DataListEnvelope<Workout>>('http://localhost:3000/api/v1/Workouts')
   console.log('Fetched Workouts:', response) // Add this line
   return response
+}*/
+
+export async function getAllWorkout() {
+  return api<DataListEnvelope<Workout>>('workouts')
+}
+export async function getById(id: number) {
+  return api<DataEnvelope<User>>(`workouts/${id}`)
+}
+export function create(workout: Workout) {
+  return api<DataEnvelope<User>>('workouts', workout)
+}
+export function update(workout: Workout) {
+  return api<DataEnvelope<User>>(`workouts/${workout.id}`, workout, 'PATCH')
+}
+export function remove(id: number) {
+  return api<DataEnvelope<User>>(`workouts/${id}`, undefined, 'DELETE')
 }
 
 export interface Workout {

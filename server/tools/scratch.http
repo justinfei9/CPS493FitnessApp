@@ -21,4 +21,17 @@ GET http://localhost:3000/api/v1/workouts
 ###
 DELETE http://localhost:3000/api/v1/workouts/2
 
+###
+POST http://localhost:3000/api/v1/workouts
+Content-Type: application/json
+
+{
+      "title": "Bench Press",
+      "date": "2024-12-05",
+      "duration": 60,
+      "location": "Gym B",
+      "type": "Strength Training",
+      "userHandle": "@JustinFeinman"
+}
+
 

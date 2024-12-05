@@ -49,7 +49,6 @@ const routes = [
     name: 'activity',
     component: MyActivity
   }
-  // Add more routes as needed
 ]
 
 const router = createRouter({
