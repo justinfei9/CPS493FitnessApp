@@ -1,22 +1,16 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import WorkoutCard from '../../components/WorkoutCard.vue'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import type { Workout } from '@/models/workout'
 import { getAllWorkout } from '@/models/workout'
 
 // Fetch all workouts and filter by logged-in user
 const workouts = ref<Workout[]>([])
-getAllWorkout()
-  .then((data) => {
-    // If the response is an array of workouts directly:
-    workouts.value = Array.isArray(data) ? data : []
-    console.log('Fetched workouts:', workouts.value)
-  })
-  .catch((err) => {
-    console.error('Error fetching workouts:', err)
-    workouts.value = []
-  })
+onMounted(async () => {
+  const result = await getAllWorkout()
+  workouts.value = result.data
+})
 
 // Filter workouts by logged-in user
 </script>
