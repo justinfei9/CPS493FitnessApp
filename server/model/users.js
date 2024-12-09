@@ -1,6 +1,9 @@
+const fs = require("fs");
+const path = require("path");
+const filePath = path.join(__dirname, "../data/users.json");
+
 /** @type {{ items: User[] }} */
-//const data = require("../data/users.json");
-const data = { items: require("../data/users.json").users };
+const data = { items: require(filePath).users };
 
 /**
  * @template T
@@ -11,6 +14,17 @@ const data = { items: require("../data/users.json").users };
 /**
  * @typedef {import("../../client/src/models/users").User} User
  */
+
+/**
+ * Helper function to save changes to the JSON file.
+ */
+function saveToFile() {
+  fs.writeFileSync(
+    filePath,
+    JSON.stringify({ users: data.items }, null, 2),
+    "utf8"
+  );
+}
 
 /**
  * Get all users
@@ -43,6 +57,7 @@ async function get(id) {
 async function add(user) {
   user.id = data.items.reduce((prev, x) => (x.id > prev ? x.id : prev), 0) + 1;
   data.items.push(user);
+  saveToFile(); // Save changes to the JSON file
   return {
     isSuccess: true,
     data: user,
@@ -57,6 +72,7 @@ async function add(user) {
 async function update(id, user) {
   const userToUpdate = await get(id);
   Object.assign(userToUpdate.data, user);
+  saveToFile(); // Save changes to the JSON file
   return {
     isSuccess: true,
     data: userToUpdate.data,
@@ -78,6 +94,7 @@ async function remove(id) {
       status: 404,
     };
   data.items.splice(userIndex, 1);
+  saveToFile(); // Save changes to the JSON file
   return { isSuccess: true, message: "Item deleted", data: id };
 }
 

@@ -1,6 +1,9 @@
+const fs = require("fs");
+const path = require("path");
+const filePath = path.join(__dirname, "../data/workouts.json");
 /** @type {{ items: Workout[] }} */
 // const data = require("../data/workouts.json");
-const data = { items: require("../data/workouts.json").workouts };
+const data = { items: require(filePath).workouts };
 
 /**
  * @template T
@@ -11,6 +14,17 @@ const data = { items: require("../data/workouts.json").workouts };
 /**
  * @typedef {import("../../client/src/models/workout").Workout} Workout
  */
+
+/**
+ * Helper function to save changes to the JSON file.
+ */
+function saveToFile() {
+  fs.writeFileSync(
+    filePath,
+    JSON.stringify({ workouts: data.items }, null, 2),
+    "utf8"
+  );
+}
 
 /**
  * Get all workouts
@@ -46,6 +60,7 @@ async function add(workout) {
   workout.id =
     data.items.reduce((prev, x) => (x.id > prev ? x.id : prev), 0) + 1;
   data.items.push(workout);
+  saveToFile(); // Save changes to the JSON file
   return {
     isSuccess: true,
     data: workout,
@@ -69,6 +84,7 @@ async function update(id, workout) {
     };
   }
   Object.assign(workoutToUpdate.data, workout);
+  saveToFile(); // Save changes to the JSON file
   return {
     isSuccess: true,
     data: workoutToUpdate.data,
@@ -90,6 +106,7 @@ async function remove(id) {
       status: 404,
     };
   data.items.splice(workoutIndex, 1);
+  saveToFile(); // Save changes to the JSON file
   return {
     isSuccess: true,
     message: "Workout deleted",
