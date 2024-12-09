@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, defineEmits, type Ref } from 'vue'
-import type { User } from '@/models/users'
+import { ref, defineEmits } from 'vue'
+import { create } from '@/models/workout'
+import type { Workout } from '@/models/workout'
 
 const emit = defineEmits(['add-workout', 'close'])
 
@@ -9,24 +10,28 @@ const date = ref('')
 const duration = ref(0)
 const location = ref('')
 const type = ref('')
+const loggedInUser = ref(window.loggedInUser) // assuming this stores the logged-in user
 
-const loggedInUser: Ref<User | null> = ref(window.loggedInUser)
-console.log('Logged In User:', loggedInUser.value)
-// Function to handle form submission
-
-const submitForm = () => {
-  const newWorkout = {
-    id: Math.random(), // Generate a random ID for the workout (consider a more robust ID generation in a real app)
+// Handle form submission
+const submitForm = async () => {
+  const newWorkout: Workout = {
+    id: 0,
     title: title.value,
     date: date.value,
     duration: duration.value,
     location: location.value,
     type: type.value,
-    userHandle: loggedInUser.value?.firstName // Use user handle
+    userHandle: loggedInUser.value?.firstName
   }
 
-  emit('add-workout', newWorkout) // Emit the new workout data
-  close() // Close the modal
+  try {
+    emit('add-workout', newWorkout) // Emit the new workout to parent component
+    await create(newWorkout)
+    console.log('new workout: ' + newWorkout.title)
+    close() // Close the form after submission
+  } catch (error) {
+    console.error('Failed to add workout:', error)
+  }
 }
 
 // Function to close the form
@@ -39,6 +44,7 @@ const close = () => {
   emit('close') // Emit close event to notify the parent component
 }
 </script>
+
 <template>
   <div class="modal is-active">
     <div class="modal-background" @click="close"></div>

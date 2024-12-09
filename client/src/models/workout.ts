@@ -1,15 +1,6 @@
-// models/workouts.ts
-import data1 from '../data/workouts.json'
-import data2 from '../data/users.json'
 import type { User } from './users'
 import type { DataEnvelope, DataListEnvelope } from './dataEnvelope'
 import { api } from './myfetch'
-
-/*export async function getAllWorkout() {
-  const response = await rest<DataListEnvelope<Workout>>('http://localhost:3000/api/v1/Workouts')
-  console.log('Fetched Workouts:', response) // Add this line
-  return response
-}*/
 
 export async function getAllWorkout() {
   return api<DataListEnvelope<Workout>>('workouts')
