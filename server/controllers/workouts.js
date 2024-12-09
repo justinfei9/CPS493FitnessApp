@@ -16,7 +16,6 @@ app
       .catch(next);
   })
   .post("/", (req, res, next) => {
-    const user = model.add(req.body);
     model
       .add(req.body)
       .then((x) => res.send(x))
