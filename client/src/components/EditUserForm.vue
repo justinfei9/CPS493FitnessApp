@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue'
 import type { User } from '@/models/users'
+import { update } from '@/models/users'
 
 // Props
 const props = defineProps<{
@@ -10,12 +11,14 @@ const props = defineProps<{
 const emit = defineEmits(['submit', 'cancel'])
 
 // Reactive form state
-const form = ref({
+const form = ref<User>({
   firstName: '',
   lastName: '',
   email: '',
   handle: '',
-  isAdmin: false
+  isAdmin: false,
+  password: '', // Add default value for password
+  id: 0 // Add default value for id
 })
 
 // Populate form data when the component is mounted
@@ -35,8 +38,13 @@ watch(
 )
 
 // Emit the user data back to the parent component
-const submitForm = () => {
-  emit('submit', { ...form.value }) // Emit the submitted user data
+const submitForm = async () => {
+  try {
+    await update(form.value) // Update the user data
+    emit('submit', { ...form.value }) // Emit the updated user data
+  } catch (error) {
+    console.error('Failed to update user:', error)
+  }
 }
 
 // Handle cancel action
