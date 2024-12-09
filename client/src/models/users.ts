@@ -1,4 +1,3 @@
-import data from '../data/users.json'
 import type { DataEnvelope, DataListEnvelope } from './dataEnvelope'
 import { api } from './myfetch'
 

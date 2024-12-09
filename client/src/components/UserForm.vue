@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, defineEmits } from 'vue'
 import type { User } from '@/models/users'
+import { create } from '@/models/users'
 
 const emit = defineEmits(['submit', 'cancel'])
 
@@ -16,9 +17,15 @@ const formUser = ref<User>({
 })
 
 // Handle form submission
-function submitForm() {
-  emit('submit', formUser.value)
-  resetForm()
+async function submitForm() {
+  try {
+    const newUser = formUser.value
+    await create(newUser) // Send the new user data to the API
+    emit('submit', newUser) // Optionally, emit the updated user to parent component
+    resetForm() // Reset the form
+  } catch (error) {
+    console.error('Failed to add user:', error)
+  }
 }
 
 // Reset form fields
