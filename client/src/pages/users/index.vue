@@ -28,9 +28,9 @@ function addUser(user: User) {
 
 // Update a specific user in the list
 function updateUser(updatedUser: User) {
-  const index = users.value.findIndex((user) => user.handle === updatedUser.handle)
+  const index = users.value.findIndex((user) => user.id === updatedUser.id) // Find user by ID
   if (index !== -1) {
-    users.value[index] = updatedUser
+    users.value[index] = { ...users.value[index], ...updatedUser } // Update user details, including handle
   }
 }
 
