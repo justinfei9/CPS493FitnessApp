@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import type { User } from '@/models/users'
 import EditUserForm from '@/components/EditUserForm.vue'
+import { remove } from '@/models/users'
 
 const props = defineProps<{
   user: User
@@ -19,7 +20,12 @@ const handleEdit = () => {
 }
 
 const handleDelete = () => {
-  emit('delete', props.user.handle) // Emit the user's handle for deletion
+  try {
+    remove(props.user.id) // Remove the user data
+    emit('delete', props.user.handle) // Emit the user's handle for deletion
+  } catch (error) {
+    console.error('Failed to update user:', error)
+  }
 }
 
 // Handle submission from EditUserForm
