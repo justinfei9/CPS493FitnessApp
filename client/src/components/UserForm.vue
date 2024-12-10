@@ -88,8 +88,13 @@ function cancelForm() {
           </label>
         </div>
         <div class="field">
-          <label class="label">ID</label>
-          <input class="input" v-model="formUser.id" type="text" placeholder="Enter ID" />
+          <label class="label">Password</label>
+          <input
+            class="input"
+            v-model="formUser.password"
+            type="password"
+            placeholder="Enter password"
+          />
         </div>
       </section>
       <footer class="modal-card-foot">
