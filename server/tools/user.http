@@ -6,6 +6,9 @@ DELETE http://localhost:3000/api/v1/users/2
 
 
 ###
+
+
+###
 POST http://localhost:3000/api/v1/users
 Content-Type: application/json
 
@@ -16,4 +19,32 @@ Content-Type: application/json
   "handle": "@mosheplotkin",
   "isAdmin": false,
   "password": "securepassword123"
+}
+
+###
+POST http://localhost:3000/api/v1/users/seed
+
+###
+POST http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "firstName": "steph",
+  "lastName": "dickinson-frevola",
+  "email": "stephdf@example.com",
+  "handle": "@stephdf",
+  "isAdmin": false,
+  "password": "badpass123"
+}
+###
+PATCH http://localhost:3000/api/v1/users/1577
+Content-Type: application/json
+
+{
+  "firstName": "steph",
+  "lastName": "dickinson-frevola",
+  "email": "stephPatchEmail@example.com",
+  "handle": "@stephdf",
+  "isAdmin": false,
+  "password": "badpass123"
 }
