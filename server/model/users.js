@@ -1,4 +1,3 @@
-const fs = require("fs");
 const path = require("path");
 const filePath = path.join(__dirname, "../data/users.json");
 
@@ -21,13 +20,6 @@ const data = { items: require(filePath).users };
 /**
  * Helper function to save changes to the JSON file.
  */
-function saveToFile() {
-  fs.writeFileSync(
-    filePath,
-    JSON.stringify({ users: data.items }, null, 2),
-    "utf8"
-  );
-}
 
 /**
  * @template T
@@ -53,7 +45,7 @@ async function getAll() {
  */
 async function get(id) {
   const { data, error } = await conn
-    .from("products")
+    .from("users")
     .select("*, reviews(*)")
     .eq("id", id)
     .single();

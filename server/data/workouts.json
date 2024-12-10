@@ -7,7 +7,7 @@
       "duration": 30,
       "location": "Central Park",
       "type": "Cardio",
-      "userHandle": "@johndoe"
+      "handle": "@johndoe"
     },
     {
       "id": 2,
@@ -16,7 +16,7 @@
       "duration": 45,
       "location": "Gym A",
       "type": "Strength Training",
-      "userHandle": "@JustinFeinman"
+      "handle": "@JustinFeinman"
     },
     {
       "id": 3,
@@ -25,7 +25,7 @@
       "duration": 60,
       "location": "Community Center",
       "type": "Yoga",
-      "userHandle": "@alicejohnson"
+      "handle": "@alicejohnson"
     },
     {
       "id": 4,
@@ -34,7 +34,7 @@
       "duration": 20,
       "location": "Home",
       "type": "High-Intensity Interval Training",
-      "userHandle": "@RobBrugler"
+      "handle": "@RobBrugler"
     },
     {
       "id": 5,
@@ -43,7 +43,7 @@
       "duration": 50,
       "location": "Studio B",
       "type": "Pilates",
-      "userHandle": "@freakjohn"
+      "handle": "@freakjohn"
     }
   ]
 }

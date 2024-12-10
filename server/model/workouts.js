@@ -1,8 +1,8 @@
-const fs = require("fs");
 const path = require("path");
 const filePath = path.join(__dirname, "../data/workouts.json");
-/** @type {{ items: Workout[] }} */
-// const data = require("../data/workouts.json");
+
+const { getConnection } = require("./supabase");
+const conn = getConnection();
 const data = { items: require(filePath).workouts };
 
 /**
@@ -16,25 +16,18 @@ const data = { items: require(filePath).workouts };
  */
 
 /**
- * Helper function to save changes to the JSON file.
- */
-function saveToFile() {
-  fs.writeFileSync(
-    filePath,
-    JSON.stringify({ workouts: data.items }, null, 2),
-    "utf8"
-  );
-}
-
-/**
  * Get all workouts
  * @returns {Promise<DataListEnvelope<Workout>>}
  */
 async function getAll() {
+  const { data, error, count } = await conn
+    .from("workouts")
+    .select("*", { count: "estimated" }); // Get total count as well
   return {
-    isSuccess: true,
-    data: data.items,
-    total: data.items.length,
+    isSuccess: !error,
+    message: error?.message,
+    data: data,
+    total: count,
   };
 }
 
@@ -44,10 +37,15 @@ async function getAll() {
  * @returns {Promise<DataEnvelope<Workout>>}
  */
 async function get(id) {
-  const item = data.items.find((workout) => workout.id == id);
+  const { data, error } = await conn
+    .from("workouts")
+    .select("*")
+    .eq("id", id)
+    .single(); // Retrieve a single workout by id
   return {
-    isSuccess: !!item,
-    data: item,
+    isSuccess: !error,
+    message: error?.message,
+    data: data,
   };
 }
 
@@ -57,13 +55,15 @@ async function get(id) {
  * @returns {Promise<DataEnvelope<Workout>>}
  */
 async function add(workout) {
-  workout.id =
-    data.items.reduce((prev, x) => (x.id > prev ? x.id : prev), 0) + 1;
-  data.items.push(workout);
-  saveToFile(); // Save changes to the JSON file
+  const { data, error } = await conn
+    .from("workouts")
+    .insert([workout]) // Insert new workout
+    .select("*")
+    .single(); // Return the newly created workout
   return {
-    isSuccess: true,
-    data: workout,
+    isSuccess: !error,
+    message: error?.message,
+    data: data,
   };
 }
 
@@ -74,20 +74,16 @@ async function add(workout) {
  * @returns {Promise<DataEnvelope<Workout>>}
  */
 async function update(id, workout) {
-  const workoutToUpdate = await get(id);
-  if (!workoutToUpdate.isSuccess) {
-    throw {
-      isSuccess: false,
-      message: "Workout not found",
-      data: id,
-      status: 404,
-    };
-  }
-  Object.assign(workoutToUpdate.data, workout);
-  saveToFile(); // Save changes to the JSON file
+  const { data, error } = await conn
+    .from("workouts")
+    .update(workout) // Update workout fields
+    .eq("id", id) // Match the workout by id
+    .select("*")
+    .single(); // Return the updated workout
   return {
-    isSuccess: true,
-    data: workoutToUpdate.data,
+    isSuccess: !error,
+    message: error?.message,
+    data: data,
   };
 }
 
@@ -97,21 +93,23 @@ async function update(id, workout) {
  * @returns {Promise<DataEnvelope<number>>}
  */
 async function remove(id) {
-  const workoutIndex = data.items.findIndex((workout) => workout.id == id);
-  if (workoutIndex === -1)
-    throw {
-      isSuccess: false,
-      message: "Workout not found",
-      data: id,
-      status: 404,
-    };
-  data.items.splice(workoutIndex, 1);
-  saveToFile(); // Save changes to the JSON file
+  const { data, error } = await conn
+    .from("workouts")
+    .delete() // Delete the workout by id
+    .eq("id", id)
+    .select("*")
+    .single(); // Return the deleted workout info
   return {
-    isSuccess: true,
-    message: "Workout deleted",
-    data: id,
+    isSuccess: !error,
+    message: error?.message,
+    data: data,
   };
+}
+async function seed() {
+  for (const Workout of data.items) {
+    console.log(Workout);
+    await add(Workout);
+  }
 }
 
 module.exports = {
@@ -120,4 +118,5 @@ module.exports = {
   add,
   update,
   remove,
+  seed,
 };
