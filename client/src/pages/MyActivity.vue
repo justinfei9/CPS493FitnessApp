@@ -15,8 +15,6 @@ onMounted(async () => {
 
 // Filter workouts by logged-in user
 const userWorkouts = computed(() => {
-  console.log('Workouts:', workouts.value)
-  console.log('Logged In User:', loggedInUser.value)
   if (!workouts.value || !Array.isArray(workouts.value)) return []
   if (!loggedInUser.value) return []
   return workouts.value.filter((workout) => workout.handle === loggedInUser.value.handle)
@@ -24,7 +22,6 @@ const userWorkouts = computed(() => {
 const isFormOpen = ref(false)
 // Assuming you have a global way to get the logged-in user
 const loggedInUser = ref(window.loggedInUser)
-console.log('Logged In User:', loggedInUser.value)
 
 // Compute the user's workouts
 

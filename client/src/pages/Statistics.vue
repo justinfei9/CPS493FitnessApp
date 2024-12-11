@@ -16,8 +16,6 @@ onMounted(async () => {
 
 // Filter workouts by logged-in user
 const userWorkouts = computed(() => {
-  console.log('Workouts:', workouts.value)
-  console.log('Logged In User:', loggedInUser.value)
   if (!workouts.value || !Array.isArray(workouts.value)) return []
   if (!loggedInUser.value) return []
   return workouts.value.filter((workout) => workout.handle === loggedInUser.value.handle)
