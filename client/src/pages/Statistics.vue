@@ -20,7 +20,7 @@ const userWorkouts = computed(() => {
   console.log('Logged In User:', loggedInUser.value)
   if (!workouts.value || !Array.isArray(workouts.value)) return []
   if (!loggedInUser.value) return []
-  return workouts.value.filter((workout) => workout.userHandle === loggedInUser.value.handle)
+  return workouts.value.filter((workout) => workout.handle === loggedInUser.value.handle)
 })
 
 // Calculate total workouts

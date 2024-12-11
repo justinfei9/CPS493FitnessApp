@@ -8,11 +8,13 @@ const props = defineProps<{
 }>()
 
 const users = ref<User[]>([])
-getAll().then((data) => (users.value = data.data))
+getAll().then((data) => {
+  users.value = data.data
+})
 
 // Find the user associated with this workout
 const user = computed(() => {
-  return users.value.find((u) => u.handle === props.workout.userHandle) || null
+  return users.value.find((u) => u.handle === props.workout.handle) || null
 })
 const loggedInUser: Ref<User | null> = ref(window.loggedInUser)
 </script>
@@ -25,13 +27,7 @@ const loggedInUser: Ref<User | null> = ref(window.loggedInUser)
       <p><strong>Duration:</strong> {{ workout.duration }} min</p>
       <p><strong>Location:</strong> {{ workout.location }}</p>
       <p><strong>Type:</strong> {{ workout.type }}</p>
-      <p v-if="user">
-        <strong>User:</strong> {{ user.firstName }} {{ user.lastName }} ({{ user.handle }})
-      </p>
-      <p v-else-if="loggedInUser">
-        {{ loggedInUser.firstName }} {{ loggedInUser.lastName }} ({{ loggedInUser.handle }})
-      </p>
-      <p v-else><strong>User:</strong> Not found</p>
+      <strong>User:</strong> {{ user?.firstName }} {{ user?.lastName }} ({{ user?.handle }})
     </div>
   </div>
 </template>

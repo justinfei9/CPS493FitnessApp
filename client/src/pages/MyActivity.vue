@@ -19,7 +19,7 @@ const userWorkouts = computed(() => {
   console.log('Logged In User:', loggedInUser.value)
   if (!workouts.value || !Array.isArray(workouts.value)) return []
   if (!loggedInUser.value) return []
-  return workouts.value.filter((workout) => workout.userHandle === loggedInUser.value.handle)
+  return workouts.value.filter((workout) => workout.handle === loggedInUser.value.handle)
 })
 const isFormOpen = ref(false)
 // Assuming you have a global way to get the logged-in user
@@ -34,7 +34,7 @@ const openWorkoutForm = () => {
 
 const addWorkout = (newWorkout: Workout) => {
   // Add the new workout to the workouts array
-  newWorkout.userHandle = loggedInUser.value.handle // Set the userHandle for the new workout
+  newWorkout.handle = loggedInUser.value.handle // Set the userHandle for the new workout
   workouts.value.unshift(newWorkout) // Add the new workout to the workouts array
   isFormOpen.value = false
 }

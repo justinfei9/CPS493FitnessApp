@@ -25,5 +25,5 @@ export interface Workout {
   duration: number
   location: string
   type: string
-  userHandle: string
+  handle: string
 }

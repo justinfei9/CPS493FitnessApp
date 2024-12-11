@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { getAll } from '@/models/users'
 import type { User } from '@/models/users'

@@ -21,13 +21,12 @@ const submitForm = async () => {
     duration: duration.value,
     location: location.value,
     type: type.value,
-    userHandle: loggedInUser.value?.firstName
+    handle: loggedInUser.value?.firstName
   }
 
   try {
     emit('add-workout', newWorkout) // Emit the new workout to parent component
     await create(newWorkout)
-    console.log('new workout: ' + newWorkout.title)
     close() // Close the form after submission
   } catch (error) {
     console.error('Failed to add workout:', error)
