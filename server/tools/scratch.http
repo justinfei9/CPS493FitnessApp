@@ -18,8 +18,23 @@ Content-Type: application/json
       "duration": 60,
       "location": "Gym B",
       "type": "Strength Training",
-      "handle": "@JustinFeinman"
+      "handle": "@JustinFeinman",
+      "id": 4
 }
+###
+POST http://localhost:3000/api/v1/workouts
+Content-Type: application/json
+
+{
+        "title": "q",
+        "date": "10/10/2021",
+        "duration": 0,
+        "location": "1",
+        "type": "1",
+        "handle": "@JustinFeinman"
+}
+###
+DELETE http://localhost:3000/api/v1/workouts/7
 
 ###
 POST http://localhost:3000/api/v1/workouts/seed

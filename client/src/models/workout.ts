@@ -9,6 +9,7 @@ export async function getById(id: number) {
   return api<DataEnvelope<User>>(`workouts/${id}`)
 }
 export function create(workout: Workout) {
+  console.log(workout)
   return api<DataEnvelope<User>>('workouts', workout)
 }
 export function update(workout: Workout) {
