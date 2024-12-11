@@ -64,8 +64,8 @@ console.log('Current User:', window.loggedInUser)
             <i class="fa-solid fa-users"></i>Friends Activity</RouterLink
           >
 
-          <RouterLink to="/people-search" class="navbar-item"
-            ><i class="fa-solid fa-users"></i>People Search</RouterLink
+          <RouterLink to="/progress" class="navbar-item"
+            ><i class="fa-solid fa-users"></i>Progress</RouterLink
           >
 
           <div class="navbar-item has-dropdown is-hoverable">

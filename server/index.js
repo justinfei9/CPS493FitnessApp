@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const userController = require("./controllers/users");
 const WorkoutController = require("./controllers/workouts");
+const progressController = require("./controllers/progress");
 
 const port = 3000;
 
@@ -27,6 +28,7 @@ app
   })
   .use("/api/v1/users", userController)
   .use("/api/v1/workouts", WorkoutController)
+  .use("/api/v1/progress", progressController)
   .get("*", (req, res) => {
     res.sendFile(__dirname + "/dist/index.html");
   });

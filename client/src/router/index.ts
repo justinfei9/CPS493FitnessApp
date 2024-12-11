@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/pages/Home.vue'
 import Login from '@/pages/Login.vue'
 import Statistics from '@/pages/Statistics.vue'
-import PeopleSearch from '@/pages/PeopleSearch.vue'
+import Progress from '@/pages/Progress.vue'
 import SignUp from '@/pages/Signup.vue'
 import Users from '@/pages/users/index.vue'
 import workout from '@/pages/workouts/index.vue'
@@ -25,9 +25,9 @@ const routes = [
     component: Statistics
   },
   {
-    path: '/people-search',
-    name: 'PeopleSearch',
-    component: PeopleSearch
+    path: '/progress',
+    name: 'Progress',
+    component: Progress
   },
   {
     path: '/sign-up',
