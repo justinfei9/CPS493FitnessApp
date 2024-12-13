@@ -3,159 +3,200 @@
 import { ref, computed, onMounted } from 'vue'
 import { getAll } from '@/models/progress'
 import type { Progress } from '@/models/progress'
+import ProgressForm from '@/components/ProgressForm.vue' // Assuming you have a ProgressForm component
 
-// Function to filter and sort progress data for the logged-in user
-function getUserProgress(allProgressData: Progress[], loggedInUserId: number): Progress[] {
-  if (!allProgressData || !Array.isArray(allProgressData)) {
-    console.error('Invalid progress data')
-    return []
-  }
-
-  if (!loggedInUserId) {
-    console.error('Invalid user ID')
-    return []
-  }
-  return allProgressData
-    .filter((data) => data.id === loggedInUserId)
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-}
-
-const loggedInUser = ref(window.loggedInUser)
+// Define reactive variables
+const loggedInUser = ref(window.loggedInUser) // Assuming `loggedInUser` is provided by the global scope
 const progressData = ref<Progress[]>([])
-const userSortedProgress = ref<Progress[]>([])
+const userProgressData = ref<Progress[]>([])
 
+// Toggle to show/hide the modal
+const isAddingProgress = ref(false)
+
+// Fetch and filter progress data
 onMounted(async () => {
   try {
     const result = await getAll()
-    console.log('Progress data:', result.data)
+    console.log('Fetched Progress Data:', result.data)
     progressData.value = result.data
 
-    // Use the function to get filtered and sorted progress data
+    // Filter data for the logged-in user
     if (loggedInUser.value) {
-      userSortedProgress.value = getUserProgress(progressData.value, loggedInUser.value.id)
+      userProgressData.value = progressData.value.filter(
+        (record) => record.user_handle === loggedInUser.value.handle
+      )
     }
+
+    console.log('User Progress Data:', userProgressData.value)
   } catch (error) {
     console.error('Error fetching progress data:', error)
   }
 })
 
-// Compute weights dynamically from sorted progress
-const initialWeight = computed(() => userSortedProgress.value[0]?.weight || null)
+// Function to sort data by date
+function sortProgressByDate(data: Progress[]): Progress[] {
+  return data.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+}
+
+// Computed properties for initial and current weights
+const sortedUserProgress = computed(() => sortProgressByDate(userProgressData.value))
+const initialWeight = computed(() => sortedUserProgress.value[0]?.weight || 'N/A')
 const currentWeight = computed(
-  () => userSortedProgress.value[userSortedProgress.value.length - 1]?.weight || null
-)
-console.log(userSortedProgress.value)
-
-// Extract all weight data for the logged-in user
-const weightData = computed(() =>
-  userSortedProgress.value.map((data) => ({
-    date: data.date,
-    weight: data.weight
-  }))
+  () => sortedUserProgress.value[sortedUserProgress.value.length - 1]?.weight || 'N/A'
 )
 
-// Compute weight change and percentage change
-const weightChange = computed(() => {
-  console.log('array' + userSortedProgress.value)
-  if (currentWeight.value !== null && initialWeight.value !== null) {
-    return currentWeight.value - initialWeight.value
-  }
-  return 0
+// Function to add new progress data
+function addProgress(newProgress: Progress) {
+  userProgressData.value.push(newProgress)
+  isAddingProgress.value = false // Close the modal after adding progress
+}
+const highestWeight = computed(() => {
+  if (userProgressData.value.length === 0) return 'N/A'
+  return Math.max(...userProgressData.value.map((record) => record.weight))
 })
-const weightPercentageChange = computed(() => {
-  if (initialWeight.value) {
-    return ((weightChange.value / initialWeight.value) * 100).toFixed(2)
-  }
-  return 0
+
+const lowestWeight = computed(() => {
+  if (userProgressData.value.length === 0) return 'N/A'
+  return Math.min(...userProgressData.value.map((record) => record.weight))
 })
 </script>
 
 <template>
-  <div class="progress container">
-    <h1 class="title has-text-centered has-text-black">Weight Progress</h1>
-
-    <div class="box">
-      <div class="content">
-        <div class="progress-card has-text-primary">
-          <div class="progress-statistic">
-            <p class="progress-title">Initial Weight:</p>
-            <p class="progress-value">{{ initialWeight }} kg</p>
+  <section class="section">
+    <div class="container">
+      <!-- Container for progress data -->
+      <div v-if="userProgressData.length > 0">
+        <!-- First row of columns (Initial Weight and Current Weight) -->
+        <div class="columns">
+          <div class="column is-half">
+            <article class="message is-primary">
+              <div class="message-header">
+                <p>Initial Weight</p>
+              </div>
+              <div class="message-body has-text-centered">
+                <span class="has-text-weight-bold">{{ initialWeight }} lbs</span>
+              </div>
+            </article>
           </div>
 
-          <div class="progress-statistic">
-            <p class="progress-title">Current Weight:</p>
-            <p class="progress-value">{{ currentWeight }} kg</p>
+          <div class="column is-half">
+            <article class="message is-warning">
+              <div class="message-header">
+                <p>Current Weight</p>
+              </div>
+              <div class="message-body has-text-centered">
+                <span class="has-text-weight-bold">{{ currentWeight }} lbs</span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Second row of columns (Highest Weight and Lowest Weight) -->
+        <div class="columns">
+          <div class="column is-half">
+            <article class="message is-danger">
+              <div class="message-header">
+                <p>Highest Weight</p>
+              </div>
+              <div class="message-body has-text-centered">
+                <span class="has-text-weight-bold">{{ highestWeight }} lbs</span>
+              </div>
+            </article>
           </div>
 
-          <div class="progress-statistic">
-            <p class="progress-title">Weight Change:</p>
-            <p class="progress-value">{{ weightChange }} kg</p>
-          </div>
-
-          <div class="progress-statistic">
-            <p class="progress-title">Percentage Change:</p>
-            <p class="progress-value">{{ weightPercentageChange }}%</p>
+          <div class="column is-half">
+            <article class="message is-success">
+              <div class="message-header">
+                <p>Lowest Weight</p>
+              </div>
+              <div class="message-body has-text-centered">
+                <span class="has-text-weight-bold">{{ lowestWeight }} lbs</span>
+              </div>
+            </article>
           </div>
         </div>
       </div>
-    </div>
-    <h1>test</h1>
-    <!-- Display all progress records -->
-    <div class="progress-list">
-      <h2 class="subtitle has-text-centered">All Progress Records</h2>
-      <div v-for="(record, index) in weightData" :key="index" class="progress-item">
-        <p>
-          Date: <strong>{{ record.date }}</strong
-          >, Weight: <strong>{{ record.weight }}</strong> kg
-        </p>
+
+      <!-- Modal for Progress Form -->
+      <div v-if="isAddingProgress" class="modal is-active">
+        <div class="modal-background" @click="isAddingProgress = false"></div>
+        <div class="modal-content">
+          <ProgressForm @submit="addProgress" @cancel="isAddingProgress = false" />
+        </div>
+        <button
+          class="modal-close is-large"
+          aria-label="close"
+          @click="isAddingProgress = false"
+        ></button>
       </div>
+
+      <!-- Add Progress Button (Visible when logged in) -->
+      <div v-if="loggedInUser" class="has-text-centered my-5">
+        <button
+          class="button is-link has-text-white is-large px-6 py-4"
+          @click="isAddingProgress = true"
+        >
+          <i class="fas fa-plus icon-margin"></i> Add Progress
+        </button>
+      </div>
+
+      <!-- Message if no user is logged in -->
     </div>
-  </div>
+  </section>
 </template>
 
 <style scoped>
-.progress {
-  margin-top: 20px;
+.icon-margin {
+  margin-right: 0.5rem;
 }
 
-.box {
+.modal {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+.modal-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-content {
+  position: relative;
+  margin: 15% auto;
   padding: 20px;
-  border-radius: 0px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 8px;
+  max-width: 500px;
 }
 
-.progress-card {
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Style the button */
+.button.is-link {
+  font-size: 1.5rem; /* Bigger text */
+  padding: 15px 30px; /* Padding for a larger button */
+}
+
+.has-text-centered {
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-
-.progress-statistic {
-  flex: 1 1 30%;
-  margin: 10px;
-  padding: 20px;
-  background-color: #f5f5f5;
-  border-radius: 0px;
-  text-align: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.progress-title {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.progress-value {
-  font-size: 1.5em;
-  color: #363636;
-}
-
-.progress-list {
-  margin-top: 20px;
-}
-
-.progress-item {
-  padding: 10px 0;
-  border-bottom: 1px solid #ddd;
+  justify-content: center;
+  align-items: center;
 }
 </style>

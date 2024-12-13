@@ -1,2 +1,5 @@
 ###
 GET http://localhost:3000/api/v1/progress
+
+###
+DELETE http://localhost:3000/api/v1/progress/16
