@@ -27,5 +27,4 @@ export interface Progress {
   date: string // timestamp in string format (ISO 8601)
   id: number
   created_at: string // timestamp of record creation
-  updated_at: string // timestamp of last update
 }
