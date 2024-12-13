@@ -56,7 +56,7 @@ function resetForm() {
 
       <form @submit.prevent="submitProgress">
         <div class="field">
-          <label class="label">Weight (kg)</label>
+          <label class="label">Weight (lbs)</label>
           <div class="control">
             <input
               class="input"
