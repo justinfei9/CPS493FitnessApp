@@ -21,8 +21,8 @@ importers:
         specifier: ^4.21.0
         version: 4.21.0
       supabase:
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.1.1
+        version: 2.1.1
     devDependencies:
       nodemon:
         specifier: ^3.1.7
@@ -588,8 +588,8 @@ packages:
     resolution: {integrity: sha512-iq6eVVI64nQQTRYq2KtEg2d2uU7LElhTJwsH4YzIHZshxlgZms/wIc4VoDQTlG/IvVIrBKG06CrZnp0qv7hkcQ==}
     engines: {node: '>=12'}
 
-  supabase@2.0.0:
-    resolution: {integrity: sha512-2Z42hoKgmjMjFMo3pVdVvV8nIDly/ac/v4ZcHSdDJohf+2Y+/OJ1sHGoIvm6v3N4dAGKe3SCovS3+HYFGL1L7w==}
+  supabase@2.1.1:
+    resolution: {integrity: sha512-KPP4LrvMmu6IWIcqSOcPbepTGT2Fv05TMiYwbcEaKgCVUznDNtlyXQTImJhjP+8FhNuJ+tF9SLoQgMQqDei+jA==}
     engines: {npm: '>=8'}
     hasBin: true
 
@@ -1280,7 +1280,7 @@ snapshots:
     dependencies:
       ansi-regex: 6.1.0
 
-  supabase@2.0.0:
+  supabase@2.1.1:
     dependencies:
       bin-links: 5.0.0
       https-proxy-agent: 7.0.6
