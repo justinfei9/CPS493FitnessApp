@@ -9,6 +9,7 @@ const port = 3000;
 // Middleware
 
 app.use((req, res, next) => {
+  console.log("CORS Middleware: ", req.method, req.url);
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "*");
   res.header("Access-Control-Allow-Headers", "*");
@@ -19,10 +20,33 @@ app.use(express.json());
 app.use(express.static(__dirname + "/dist"));
 
 // Controllers
+//i want to add a print statement to debug when these are called
+
 app
-  .use("/api/v1/users", userController)
-  .use("/api/v1/workouts", WorkoutController)
-  .use("/api/v1/progress", progressController)
+  .use(
+    "/api/v1/users",
+    (req, res, next) => {
+      console.log("User Controller called");
+      next();
+    },
+    userController
+  )
+  .use(
+    "/api/v1/workouts",
+    (req, res, next) => {
+      console.log("Workout Controller called");
+      next();
+    },
+    WorkoutController
+  )
+  .use(
+    "/api/v1/progress",
+    (req, res, next) => {
+      console.log("Progress Controller called");
+      next();
+    },
+    progressController
+  )
   .get("/", function (req, res, next) {
     res.send("Hello World!");
   })
