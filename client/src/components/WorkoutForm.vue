@@ -11,11 +11,12 @@ const duration = ref(0)
 const location = ref('')
 const type = ref('')
 const loggedInUser = ref(window.loggedInUser) // assuming this stores the logged-in user
+const randomNumber = Math.floor(Math.random() * 1000) + 1
 
 // Handle form submission
 const submitForm = async () => {
   const newWorkout: Workout = {
-    id: 0,
+    id: randomNumber, // ID will be auto-generated on the server side
     title: title.value,
     date: date.value,
     duration: duration.value,
