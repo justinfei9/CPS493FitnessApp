@@ -20,15 +20,15 @@ app.use(express.static(__dirname + "/dist"));
 
 // Controllers
 app
+  .use("/api/v1/users", userController)
+  .use("/api/v1/workouts", WorkoutController)
+  .use("/api/v1/progress", progressController)
   .get("/", function (req, res, next) {
-    res.send("Hello World");
+    res.send("Hello World!");
   })
   .get("/about", function (req, res, next) {
     res.send("About Us");
   })
-  .use("/api/v1/users", userController)
-  .use("/api/v1/workouts", WorkoutController)
-  .use("/api/v1/progress", progressController)
   .get("*", (req, res) => {
     res.sendFile(__dirname + "/dist/index.html");
   });
