@@ -13,13 +13,12 @@ POST http://localhost:3000/api/v1/workouts
 Content-Type: application/json
 
 {
-      "title": "Bench Press",
-      "date": "2024-12-05",
-      "duration": 60,
-      "location": "Gym B",
+      "title": "Chest Press",
+      "duration": 45,
+      "location": "Gym NP",
       "type": "Strength Training",
-      "handle": "@JustinFeinman",
-      "id": 4
+      "date": "12/17/2024",
+      "handle": "@JustinFeinman"
 }
 ###
 POST http://localhost:3000/api/v1/workouts
@@ -34,7 +33,7 @@ Content-Type: application/json
         "handle": "@JustinFeinman"
 }
 ###
-DELETE http://localhost:3000/api/v1/workouts/7
+DELETE http://localhost:3000/api/v1/workouts/11
 
 ###
 POST http://localhost:3000/api/v1/workouts/seed
