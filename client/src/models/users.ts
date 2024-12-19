@@ -16,6 +16,10 @@ export function update(user: User) {
 export function remove(id: number) {
   return api<DataEnvelope<User>>(`users/${id}`, undefined, 'DELETE')
 }
+export async function search(query: string) {
+  return api<DataListEnvelope<User>>(`users/search?query=${query}`)
+}
+
 export interface User {
   firstName: string
   lastName: string

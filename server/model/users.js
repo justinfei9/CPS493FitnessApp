@@ -38,6 +38,19 @@ async function getAll() {
   };
 }
 
+async function search(query) {
+  const { data, error, count } = await conn
+    .from("users")
+    .select("*")
+    .ilike("handle", `%${query}%`);
+  return {
+    isSuccess: !error,
+    message: error?.message,
+    data: data,
+    total: count,
+  };
+}
+
 /**
  * Get a user by id
  * @param {number} id
@@ -139,4 +152,5 @@ module.exports = {
   update,
   remove,
   seed,
+  search,
 };

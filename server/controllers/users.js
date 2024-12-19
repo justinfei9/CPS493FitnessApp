@@ -1,11 +1,18 @@
 const model = require("../model/users");
 const express = require("express");
-const app = express.Router();
+const router = express.Router();
 
-app
+router
   .get("/", function (req, res, next) {
     model
       .getAll()
+      .then((x) => res.send(x))
+      .catch(next);
+  })
+  .get("/search", function (req, res, next) {
+    const query = req.query.q;
+    model
+      .search(query)
       .then((x) => res.send(x))
       .catch(next);
   })
@@ -43,4 +50,4 @@ app
       .catch(next);
   });
 
-module.exports = app; // Export the router
+module.exports = router;

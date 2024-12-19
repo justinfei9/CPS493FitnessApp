@@ -139,8 +139,6 @@ const lowestWeight = computed(() => {
           <i class="fas fa-plus icon-margin"></i> Add Progress
         </button>
       </div>
-
-      <!-- Message if no user is logged in -->
     </div>
   </section>
 </template>
@@ -175,7 +173,7 @@ const lowestWeight = computed(() => {
   padding: 20px;
   background-color: white;
   border-radius: 8px;
-  max-width: 500px;
+  max-width: 1200px;
 }
 
 .modal-close {

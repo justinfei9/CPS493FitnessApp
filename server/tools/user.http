@@ -48,3 +48,6 @@ Content-Type: application/json
   "isAdmin": false,
   "password": "badpass123"
 }
+
+###
+GET http://localhost:3000/api/v1/users/search?q=@J

@@ -6,6 +6,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import type { User } from './models/users'
+import Oruga from '@oruga-ui/oruga-next'
+import '@oruga-ui/theme-bulma/dist/bulma.css'
 
 declare global {
   interface Window {
@@ -23,6 +25,6 @@ window.loggedInUser = {
   id: 1
 }
 const app = createApp(App)
-
+app.use(Oruga)
 app.use(router)
 app.mount('#app')
