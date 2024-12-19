@@ -4,6 +4,9 @@ import { api } from './myfetch'
 export async function getAll() {
   return api<DataListEnvelope<User>>('users')
 }
+export async function search(query: string) {
+  return api<DataListEnvelope<User>>(`users/search?q=${query}`)
+}
 export async function getById(id: number) {
   return api<DataEnvelope<User>>(`users/${id}`)
 }
@@ -15,9 +18,6 @@ export function update(user: User) {
 }
 export function remove(id: number) {
   return api<DataEnvelope<User>>(`users/${id}`, undefined, 'DELETE')
-}
-export async function search(query: string) {
-  return api<DataListEnvelope<User>>(`users/search?query=${query}`)
 }
 
 export interface User {

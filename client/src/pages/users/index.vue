@@ -1,15 +1,18 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { getAll, type User } from '@/models/users'
+import { ref, watch, computed, onMounted } from 'vue'
+import { getAll, search, type User } from '@/models/users'
 import UsersCard from '@/components/UsersCard.vue'
 import UserForm from '@/components/UserForm.vue'
+import type { OptionsPropItem } from '@oruga-ui/oruga-next'
 
 const loggedInUser = ref<User | null>(window.loggedInUser)
 const users = ref<User[]>([])
 
 // Toggle to show/hide the add user form
 const isAddingUser = ref(false)
+const selected = ref('')
+//options should  use getALL to get search
 
 // Fetch users data
 onMounted(async () => {
@@ -33,6 +36,17 @@ function updateUser(updatedUser: User) {
     users.value[index] = { ...users.value[index], ...updatedUser } // Update user details, including handle
   }
 }
+const options = ref<OptionsPropItem<User>[]>([])
+
+async function getAsyncData(query: string) {
+  const data = await search(query)
+  options.value = data.data.map((user: User) => {
+    return {
+      label: user.handle,
+      value: user
+    }
+  })
+}
 
 // Function to delete a user from the list
 function deleteUser(userHandle: string) {
@@ -46,6 +60,27 @@ function deleteUser(userHandle: string) {
 
     <!-- Conditional rendering based on user's admin status -->
     <div v-if="isAdminUser">
+      <section>
+        <o-field label="Find a User">
+          <o-autocomplete
+            v-model="selected"
+            :options="options"
+            :debounce="500"
+            @input="getAsyncData"
+            @selected="selected = $event"
+            rounded
+            expanded
+            placeholder="e.g. user handle"
+            icon="search"
+            clearable
+            open-on-focus
+          >
+            <template #empty>No results found</template>
+          </o-autocomplete>
+        </o-field>
+
+        <p><b>Selected:</b> {{ selected }}</p>
+      </section>
       <button class="button is-primary has-text-white" @click="isAddingUser = true">
         <i class="fas fa-plus icon-margin"></i> Add User
       </button>
